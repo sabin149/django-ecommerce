@@ -11,18 +11,64 @@
   
     <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
 
- 
     <link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
-
 
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
 
-    <title>Gaming Accessories House |</title>
+    <title>Gaming Accessories House |{% block title %} {% endblock title %} </title>
   </head>
   <body>
- 
 
-
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+     <div class="container">
+       <a class="navbar-brand" href="/">Gaming Accessories House</a>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="/">Home</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="{% url 'all-products' %}">All Categories</a>
+           </li>
+         </ul>
+         <form class="d-flex" action="" method="get" >
+           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name=search>
+           <button class="btn btn-dark" type="submit"><i class="fas fa-search"></i></button>
+         </form>
+         <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item dropdown mx-2">
+              <a class="nav-link dropdown-toggle text-white " href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">User
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Orders</a></li>
+                <li><a class="dropdown-item" href="#">Change Password</a></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+           
+            <li class="nav-item mx-2">
+             <a href="#" class="nav-link text-white"><span class="badge bg-danger">4</span> Cart </a>
+            </li>
+           
+            <li class="nav-item mx-2">
+             <a href="#" class="nav-link text-white">Login</a>
+            </li>
+            <li class="nav-item mx-2">
+             <a href="#" class="nav-link text-white">Registration</a>
+            </li>
+           
+          </ul>
+         </div>
+       </div>
+     </div>
+    </nav>
+   
+    {% block main-content %} {% endblock main-content %}
 
 
 

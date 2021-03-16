@@ -1,0 +1,28 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block main-content %}
+
+<div class="container">
+
+    <h1 class="text-center">Welcome to Gaming Accessories House</h1>
+    <hr>
+    <div class="row mt-3">
+        {% for p in product_list %}
+        <div class="col-md-3 card">
+            <div class="m-4">
+                <a href="{% url 'productdetail' p.slug %}" class="btn">
+                <div class='item'><img src="{{p.product_image.url}}" alt="" class="img-fluid" style="height: 250; object-fit: cover;">
+                 <span class="fw-bold">{{p.title}}</span><br>
+                <span class="fs-5"><strike>Rs.{{p.marked_price}}</strike> Rs.{{p.selling_price}}</span>
+                </div>
+            
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    
+{% endblock main-content %}
