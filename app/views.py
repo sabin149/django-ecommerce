@@ -1,8 +1,11 @@
+from .forms import CustomerRegistrationForm
+from django.contrib import messages
 from .models import Category_choices, Product
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
-# Create your views here.
+from django.views import View
+
 
 
 class HomeView(TemplateView):
@@ -37,6 +40,20 @@ class AllProductsView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['allcategories'] = Category_choices.objects.all()
         return context
+
+
+class CustomerRegistrationView(View):
+    def get(self, request):
+        form = CustomerRegistrationForm()
+        return render(request, 'app/customerregistration.html', {'form': form})
+
+    def post(self, request):
+        form = CustomerRegistrationForm(request.POST)
+        if form.is_valid():
+            messages.success(
+                request, 'Congratulations!! Registered Successfully')
+            form.save()
+        return render(request, 'app/customerregistration.html', {'form': form, 'active': 'btn-primary'})
 
 
 
