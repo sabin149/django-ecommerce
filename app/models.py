@@ -18,8 +18,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
-    zipcode = models.IntegerField()
     provinice = models.CharField(choices=PROVINICE_CHOICES, max_length=50)
+    zipcode = models.IntegerField()
     joined_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

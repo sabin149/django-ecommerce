@@ -1,6 +1,6 @@
-from .forms import CustomerRegistrationForm
+from .forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
-from .models import Category_choices, Product
+from .models import Category_choices, Product, Customer
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
@@ -54,6 +54,29 @@ class CustomerRegistrationView(View):
                 request, 'Congratulations!! Registered Successfully')
             form.save()
         return render(request, 'app/customerregistration.html', {'form': form, 'active': 'btn-primary'})
+
+class ProfileView(View):
+    def get(self, request):  
+        form = CustomerProfileForm()
+        return render(request, 'app/profile.html', {'form': form, 'active': 'btn-success'})
+
+    def post(self, request):
+        
+        form = CustomerProfileForm(request.POST)
+        if form.is_valid():
+            usr = request.user
+            name = form.cleaned_data['name']
+            address = form.cleaned_data['address']
+            city = form.cleaned_data['city']
+            provinice = form.cleaned_data['provinice']
+            zipcode = form.cleaned_data['zipcode']
+            reg = Customer(user=usr, name=name, address=address,
+                           city=city, provinice=provinice, zipcode=zipcode)
+            reg.save()
+            messages.success(
+                request, 'Congratulations!! Profile Updated Successfully')
+        return render(request, 'app/profile.html', {'form': form, 'active': 'btn-success'})
+
 
 
 
