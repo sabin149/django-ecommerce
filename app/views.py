@@ -1,7 +1,7 @@
 from .forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
-from .models import Category_choices, Product, Customer
-from django.shortcuts import render
+from .models import Category_choices, Product, Customer, Cart
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
 from django.views import View
@@ -80,6 +80,13 @@ class ProfileView(View):
 def address(request):
     add = Customer.objects.filter(user=request.user)
     return render(request, 'app/address.html', {'add': add, 'active': 'btn-success'})
+
+def add_to_cart(request):
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = Product.objects.get(id=product_id)
+    Cart(user=user, product=product).save()
+    return redirect('/cart')
 
 
 
