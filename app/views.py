@@ -88,6 +88,21 @@ def add_to_cart(request):
     Cart(user=user, product=product).save()
     return redirect('/cart')
 
+def show_cart(request):
+        user = request.user
+        cart = Cart.objects.filter(user=user)
+        amount = 0.0
+        cart_product = [p for p in Cart.objects.all() if p.user == user]
+        if cart_product:
+            for p in cart_product:
+                tempamount = (p.quantity * p.product.selling_price)
+                amount += tempamount
+                totalamount = amount 
+            return render(request, 'app/addtocart.html', {'carts': cart, 'totalamount': totalamount, 'amount': amount})
+
+    
+        
+
 
 
 
