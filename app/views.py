@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
 from django.views import View
+from django.db.models import Q
 from django.http import JsonResponse
 
 
@@ -112,7 +113,7 @@ def plus_cart(request):
         cart_product = [p for p in Cart.objects.all() if p.user ==
                         request.user]
         for p in cart_product:
-            tempamount = (p.quantity * p.product.discounted_price)
+            tempamount = (p.quantity * p.product.selling_price)
             amount += tempamount
 
         data = {
