@@ -125,6 +125,29 @@ def plus_cart(request):
 
         return JsonResponse(data)
 
+def minus_cart(request):
+    if request.method == 'GET':
+        prod_id = request.GET['prod_id']
+        c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+        if c.quantity>1:
+            c.quantity -= 1
+        c.save()
+        amount = 0.0
+        shipping_amount = 70.0
+        cart_product = [p for p in Cart.objects.all() if p.user ==
+                        request.user]
+        for p in cart_product:
+            tempamount = (p.quantity * p.product.selling_price)
+            amount += tempamount
+        data = {
+
+            'quantity': c.quantity,
+            'amount': amount,
+            'totalamount': amount + shipping_amount
+        }
+        return JsonResponse(data)
+
+
     
         
 
