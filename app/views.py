@@ -1,5 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.http.response import HttpResponseRedirect
-from .forms import CustomerRegistrationForm, CustomerProfileForm, ProfileForm
+from .forms import CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProfileForm
 from django.contrib import messages
 from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile
 from django.shortcuts import redirect, render
@@ -21,6 +22,33 @@ def user_profile(request):
             return redirect('/userprofile')
     context = {'form': form}
     return render(request, 'app/user_profile.html', context)
+
+def login_user(request):
+    if request.user.is_authenticated:
+        return render(request,'app/home.html')
+    else:
+        if request.method == 'POST':
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                user = authenticate(request, username=data['username'],
+                                    password=data['password'])
+                if user is not None:
+                    if not user.is_staff:
+                        login(request, user)
+                        return render(request,'app/home.html')
+                    elif user.is_staff:
+                        login(request, user)
+                        return redirect('/admin-dashboard')
+                else:
+                    messages.add_message(request, messages.ERROR,
+                                         'Username or Password is Invalid')
+                    return render(request, 'app/login.html', {'form': form})
+    form = LoginForm()
+    context = {
+        'form': LoginForm
+    }
+    return render(request, 'app/login.html', context)
 
 def shippingaddress(request):
     if request.method=='POST':
@@ -249,6 +277,10 @@ def remove_cart(request):
             'totalamount': amount + shipping_amount
         }
         return JsonResponse(data)
+
+
+def buy_now(request):
+    return render(request, 'app/buynow.html')
 
 
     

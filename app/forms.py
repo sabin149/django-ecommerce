@@ -1,6 +1,6 @@
 from .models import Customer
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UsernameField,PasswordChangeForm, PasswordResetForm,SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm,UsernameField,PasswordChangeForm, PasswordResetForm,SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
@@ -23,7 +23,7 @@ class CustomerRegistrationForm(UserCreationForm):
         widgets = {'username': forms.TextInput(
             attrs={'class': 'form-control'})}
 
-class LoginForm(AuthenticationForm):
+class LoginForm(forms.Form):
     username = UsernameField(widget=forms.TextInput(
         attrs={'autofocus': True, 'class': 'form-control'}))
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(
