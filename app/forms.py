@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,Userna
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
+from .models import Profile
+from django.forms import ModelForm
 
 
 class CustomerRegistrationForm(UserCreationForm):
@@ -31,8 +33,8 @@ class LoginForm(AuthenticationForm):
 class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['name', 'address', 'city', 'provinice', 'zipcode']
-        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput( attrs={'class': 'form-control'}), 'provinice': forms.Select(attrs={'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs={'class': 'form-control'})}
+        fields = ['name', 'address', 'city', 'province', 'zipcode']
+        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput( attrs={'class': 'form-control'}), 'province': forms.Select(attrs={'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs={'class': 'form-control'})}
 
 class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label=_("Old Password"), strip=False, widget=forms.PasswordInput(
@@ -54,3 +56,9 @@ class UserSetPasswordForm(SetPasswordForm):
     new_password2 = forms.CharField(label=_("Confirm New Password"), strip=False, widget=forms.PasswordInput(
         attrs={'autocomplete': 'new-password', 'class': 'form-control'}))
 
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model=Profile
+        fields='__all__'
+        exclude= ['user','username']

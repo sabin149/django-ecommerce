@@ -18,8 +18,14 @@ urlpatterns = [
  path('registration/', views.CustomerRegistrationView.as_view(),
          name='customerregistration'),
  path('accounts/login/', auth_views.LoginView.as_view(template_name='app/login.html',authentication_form=LoginForm), name='login'),
- path('profile/', views.ProfileView.as_view(), name='profile'),
- path('address/',views.address, name='address'),
+ path('userprofile/', views.user_profile, name='userprofile'),
+ path('shippingaddress/', views.shippingaddress, name='shippingaddress'),
+ path('deleteaddress/<int:id>/', views.delete_address, name='deleteaddress'),
+ path('<int:id>/',views.update_address.as_view(),name="updateaddress"),
+ path('checkout/', views.checkout, name='checkout'),
+ path('orders/', views.orders, name='orders'),
+ path('paymentdone/', views.payment_done, name='paymentdone'),
+ path("search/", views.SearchView.as_view(), name="search"),
  path('passwordchange/', auth_views.PasswordChangeView.as_view(
         template_name='app/passwordchange.html', form_class=UserPasswordChangeForm, success_url='/passwordchangedone/'), name='passwordchange'),
 path('passwordchangedone/', auth_views.PasswordChangeView.as_view(

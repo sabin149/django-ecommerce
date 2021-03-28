@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('address', models.CharField(max_length=200)),
                 ('city', models.CharField(max_length=200)),
                 ('zipcode', models.IntegerField()),
-                ('provinice', models.CharField(choices=[('Province No. 1', 'Province No. 1'), ('Province No. 2', 'Province No. 2'), ('Bagmati Province', 'Bagmati Province'), ('Gandaki Province', 'Gandaki Province'), ('Lumbini Province', 'Lumbini Province'), ('Karnali Province', 'Karnali Province'), ('Sudurpashchim Province', 'Sudurpashchim Province')], max_length=50)),
+                ('province', models.CharField(choices=[('Province No. 1', 'Province No. 1'), ('Province No. 2', 'Province No. 2'), ('Bagmati Province', 'Bagmati Province'), ('Gandaki Province', 'Gandaki Province'), ('Lumbini Province', 'Lumbini Province'), ('Karnali Province', 'Karnali Province'), ('Sudurpashchim Province', 'Sudurpashchim Province')], max_length=50)),
                 ('joined_on', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
