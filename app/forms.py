@@ -1,4 +1,4 @@
-from .models import Customer
+from .models import Customer, Product
 from django import forms
 from django.contrib.auth.forms import UserCreationForm,UsernameField,PasswordChangeForm, PasswordResetForm,SetPasswordForm
 from django.utils.translation import gettext_lazy as _
@@ -62,3 +62,35 @@ class ProfileForm(ModelForm):
         model=Profile
         fields='__all__'
         exclude= ['user','username']
+
+class ProductForm(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = ["title", "category", "product_image", "discounted_price",
+                  "selling_price", "description"]
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the product title here..."
+            }),
+            "category": forms.Select(attrs={
+                "class": "form-control"
+            }),
+            "product_image": forms.ClearableFileInput(attrs={
+                "class": "form-control"
+            }),
+            "marked_price": forms.NumberInput(attrs={
+                "class": "form-control",
+                "placeholder": "Marked price of the product..."
+            }),
+            "selling_price": forms.NumberInput(attrs={
+                "class": "form-control",
+                "placeholder": "Selling price of the product..."
+            }),
+            "description": forms.Textarea(attrs={
+                "class": "form-control",
+                "placeholder": "Description of the product...",
+                "rows": 5
+            }),
+        }
