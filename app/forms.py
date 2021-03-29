@@ -64,15 +64,18 @@ class ProfileForm(ModelForm):
         exclude= ['user','username']
 
 class ProductForm(forms.ModelForm):
-
     class Meta:
         model = Product
-        fields = ["title", "category", "product_image", "discounted_price",
-                  "selling_price", "description"]
+        fields = ["title","slug", "category", "product_image", "marked_price",
+                  "selling_price", "description","brand", "warranty", "return_policy"]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Enter the product title here..."
+            }),
+            "slug": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the unique slug here..."
             }),
             "category": forms.Select(attrs={
                 "class": "form-control"
@@ -93,4 +96,18 @@ class ProductForm(forms.ModelForm):
                 "placeholder": "Description of the product...",
                 "rows": 5
             }),
+            "brand": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the product brand here..."
+            }),
+            "warranty": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the product warranty here..."
+            
+            }),
+            "return_policy": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the product return policy here..."
+            }),
+            
         }

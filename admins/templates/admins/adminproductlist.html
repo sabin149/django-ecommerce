@@ -1,0 +1,51 @@
+{% extends 'layout-admin.html' %}
+{% load static %}
+{% block title %}
+<title>All products</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="container"> 
+    <div class="row">
+        <div class="col-md-12">
+            <h3>All Product list</h3><hr>
+            <a href="{% url 'adminproductcreate' %}">Add New Product</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Product Title</th>
+                        <th>Slug</th>
+                        <th> Marked Price</th>
+                        <th> Selling Price</th>
+                        <th>Brand</th>
+                        <th>Description</th>
+                        <th>Warranty</th>
+                        <th>Category</th>
+                        <th>Product Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in allproducts %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{p.title}}</td>
+                        <td>{{p.slug}}</td>
+                        <td>{{p.marked_price}}</td>
+                        <td>{{p.selling_price}}</td>
+                        <td>{{p.description}}</td>
+                        <td>{{p.brand}}</td>
+                        <td>{{p.description}}</td>
+                        <td>{{p.warranty}}</td>
+                        <td>{{p.return_policy}}</td>
+                        <td>{{p.category}}</td>
+                        <td><img src="{{p.product_image.url}}" style="height: 60px;" alt=""></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

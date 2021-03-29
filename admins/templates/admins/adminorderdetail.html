@@ -1,0 +1,48 @@
+{% extends 'layout-admin.html' %}
+{% load static %}
+{% block title %}
+<title>Order detail</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Order Detail</h3>
+            <hr>
+            <p><span class="font-weight-bold">Order ID: </span> #ORDER_{{ord_obj.id}}</p>
+            <p><span class="font-weight-bold">Order Status: </span> {{ord_obj.status}}</p>
+            <p><span class="font-weight-bold">Order On: </span> {{ord_obj.ordered_date}}({{ord_obj.ordered_date|timesince}} ago)</p>
+            <p><span class="font-weight-bold">Customer Name: </span> {{ord_obj.name}}</p>
+            <p><span class="font-weight-bold">Zip Code: </span> {{ord_obj.zipcode}}</p>
+            <p><span class="font-weight-bold">Shipping Address: </span>{{ord_obj.address}},{{ord_obj.city}}</p>
+            <h4>Ordered Items</h4>
+            <table class="table">
+               <div class="col-sm-6">
+      <hr>
+     
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{ord_obj.product.title}}</h5>
+          <p>Quantity: {{ord_obj.quantity}}</p>
+          <p class="fw-bold">Price: {{ord_obj.total_cost}}</p>
+        </div>
+      </div>
+
+      <p class="fw-bold">Total Cost= {{ord_obj.total_cost}} </p>
+    </div>
+            </table>
+            <form action="{% url 'adminorderstatuschange' ord_obj.id %}" method="POST">
+                {% csrf_token %}
+                <select name="status">
+                    {% for i, j in allstatus %}
+                    <option value="{{i}}" {% if i == ord_obj.status_choices %}selected{% endif %}>{{j}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-info" type="submit" >Change</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

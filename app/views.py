@@ -13,6 +13,7 @@ from django.views import View
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 
 
 class HomeView(TemplateView):
@@ -74,7 +75,8 @@ def login_user(request):
                 if user is not None:
                     if not user.is_staff:
                         login(request, user)
-                        return render(request, 'app/home.html')
+                        
+                        return redirect('home')
                     elif user.is_staff:
                         login(request, user)
                         return redirect('/admin-dashboard')
@@ -311,14 +313,16 @@ def remove_cart(request):
 
 
 # Admins related
-@login_required
+
 @method_decorator(admin_only , name='dispatch')
 class AdminProductListView(ListView):
     template_name = "admins/adminproductlist.html"
     queryset = Product.objects.all().order_by("-id")
     context_object_name = "allproducts"
 
-@login_required
+    
+
+
 @method_decorator(admin_only , name='dispatch')
 class AdminProductCreateView(CreateView):
     template_name = "admins/adminproductcreate.html"
@@ -329,7 +333,7 @@ class AdminProductCreateView(CreateView):
         form.save()
         return super().form_valid(form)
 
-@login_required
+# @login_required
 @method_decorator(admin_only , name='dispatch')
 class AdminOrderDetailView(DetailView):
     template_name = "admins/adminorderdetail.html"
@@ -341,21 +345,22 @@ class AdminOrderDetailView(DetailView):
         context["allstatus"] = STATUS_CHOICES
         return context
 
-@login_required
+# @login_required
 @method_decorator(admin_only , name='dispatch')
 class AdminOrderListView(ListView):
     template_name = "admins/adminorderlist.html"
     queryset = OrderPlaced.objects.all().order_by("-id")
     context_object_name = "allorders"
 
-
-@login_required
+# @login_required
 @method_decorator(admin_only , name='dispatch') 
 class AdminOrderStatuChangeView(View):
     def post(self, request,*args, **kwargs):
-        order_id = self.kwargs["-id"]
+        order_id = self.kwargs["pk"]
         order_obj = OrderPlaced.objects.get(id=order_id)
+
         new_status = request.POST.get("status")
-        order_obj.order_status = new_status
+        print(new_status)
+        order_obj.status = new_status
         order_obj.save()
-        return redirect(reverse_lazy("adminorderdetail", kwargs={"-id": order_id}))
+        return redirect(reverse_lazy("adminorderdetail", kwargs={"pk": order_id}))

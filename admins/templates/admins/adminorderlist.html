@@ -1,0 +1,49 @@
+{% extends 'layout-admin.html' %}
+{% load static %}
+{% block title %}
+<title>All Orders</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>All Orders</h3><hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Order ID </th>
+                        <th>Customer</th>
+                        <th>Address</th>
+                        <th>City</th> 
+                        <th>Zip code</th>
+                        <th>Province</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Ordered Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in allorders %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><a href="{% url 'adminorderdetail' order.id %}">#ORDER_</a></td>
+                        <td>{{order.name}}</td>
+                        <td>{{order.address}}</td>
+                        <td>{{order.city}}</td>
+                        <td>{{order.zipcode}}</td>
+                        <td>{{order.province}}</td>
+                        <td>{{order.product}}</td>
+                        <td>{{order.quantity}}</td>
+                        <td>{{order.ordered_date}}</td>
+                        <td>{{order.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
