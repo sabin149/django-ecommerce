@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views.generic import ListView, CreateView, DetailView, TemplateView
 from django.http.response import HttpResponseRedirect
-from .forms import CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProductForm, ProfileForm
+from .forms import CategoryForm, CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProductForm, ProfileForm
 from django.contrib import messages
 from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile, STATUS_CHOICES
 from django.shortcuts import redirect, render
@@ -14,7 +14,6 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
-
 
 class HomeView(TemplateView):
     template_name = "app/home.html"
@@ -28,6 +27,15 @@ class HomeView(TemplateView):
         context['product_list'] = product_list
         return context
 
+class AllProductsView(TemplateView):
+    template_name = "app/allproducts.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['allcategories'] = Category_choices.objects.all()
+        return context
+
+
 
 class ProductDetailView(TemplateView):
     template_name = "app/productdetail.html"
@@ -40,13 +48,6 @@ class ProductDetailView(TemplateView):
         return context
 
 
-class AllProductsView(TemplateView):
-    template_name = "app/allproducts.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['allcategories'] = Category_choices.objects.all()
-        return context
 
 
 class SearchView(TemplateView):
@@ -320,9 +321,6 @@ class AdminProductListView(ListView):
     queryset = Product.objects.all().order_by("-id")
     context_object_name = "allproducts"
 
-    
-
-
 @method_decorator(admin_only , name='dispatch')
 class AdminProductCreateView(CreateView):
     template_name = "admins/adminproductcreate.html"
@@ -333,7 +331,22 @@ class AdminProductCreateView(CreateView):
         form.save()
         return super().form_valid(form)
 
-# @login_required
+@method_decorator(admin_only , name='dispatch')
+class AdminCategoryListView(ListView):
+    template_name = "admins/admincategorylist.html"
+    queryset = Category_choices.objects.all().order_by("-id")
+    context_object_name = "allcategory"
+
+@method_decorator(admin_only , name='dispatch')
+class AdminCategoryCreateView(CreateView):
+    template_name = "admins/admincategorycreate.html"
+    form_class = CategoryForm
+    success_url = reverse_lazy("admincategorylist")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
 @method_decorator(admin_only , name='dispatch')
 class AdminOrderDetailView(DetailView):
     template_name = "admins/adminorderdetail.html"
@@ -345,14 +358,14 @@ class AdminOrderDetailView(DetailView):
         context["allstatus"] = STATUS_CHOICES
         return context
 
-# @login_required
+
 @method_decorator(admin_only , name='dispatch')
 class AdminOrderListView(ListView):
     template_name = "admins/adminorderlist.html"
     queryset = OrderPlaced.objects.all().order_by("-id")
     context_object_name = "allorders"
 
-# @login_required
+
 @method_decorator(admin_only , name='dispatch') 
 class AdminOrderStatuChangeView(View):
     def post(self, request,*args, **kwargs):

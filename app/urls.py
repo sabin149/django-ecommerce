@@ -8,7 +8,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
-    path("all-products/", AllProductsView.as_view(), name="all-products"),
+    path('all-products/', views.AllProductsView.as_view(), name='all-products'),
     path('product/<slug:slug>/', ProductDetailView.as_view(), name='productdetail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
     path('cart/', views.show_cart, name='showcart'),
@@ -18,8 +18,6 @@ urlpatterns = [
     path('registration/', views.CustomerRegistrationView.as_view(),
          name='customerregistration'),
     path('login/', views.login_user, name='login'),
-#     path('accounts/login/', auth_views.LoginView.as_view(template_name='app/login.html',
-                                                       #   authentication_form=LoginForm), name='login'),
     path('userprofile/', views.user_profile, name='userprofile'),
     path('shippingaddress/', views.shippingaddress, name='shippingaddress'),
     path('deleteaddress/<int:id>/', views.delete_address, name='deleteaddress'),
@@ -50,6 +48,13 @@ urlpatterns = [
          name="adminorderlist"),
     path("admin-product/add/", views.AdminProductCreateView.as_view(),
          name="adminproductcreate"),
+
+    path("admin-category/list", views.AdminCategoryListView.as_view(),
+         name="admincategorylist"),
+
+    path("admin-category/add/", views.AdminCategoryCreateView.as_view(),
+         name="admincategorycreate"),
+
     path("admin-order/<int:pk>/", views.AdminOrderDetailView.as_view(),
          name="adminorderdetail"),
     path("admin-order-<int:pk>-change/",

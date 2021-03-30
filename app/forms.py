@@ -1,6 +1,6 @@
-from .models import Customer, Product
+from .models import Category_choices, Customer, Product
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,UsernameField,PasswordChangeForm, PasswordResetForm,SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, UsernameField, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth import password_validation
@@ -23,6 +23,7 @@ class CustomerRegistrationForm(UserCreationForm):
         widgets = {'username': forms.TextInput(
             attrs={'class': 'form-control'})}
 
+
 class LoginForm(forms.Form):
     username = UsernameField(widget=forms.TextInput(
         attrs={'autofocus': True, 'class': 'form-control'}))
@@ -34,7 +35,9 @@ class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'address', 'city', 'province', 'zipcode']
-        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput( attrs={'class': 'form-control'}), 'province': forms.Select(attrs={'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs={'class': 'form-control'})}
+        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput(
+            attrs={'class': 'form-control'}), 'province': forms.Select(attrs={'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs={'class': 'form-control'})}
+
 
 class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label=_("Old Password"), strip=False, widget=forms.PasswordInput(
@@ -43,6 +46,7 @@ class UserPasswordChangeForm(PasswordChangeForm):
         attrs={'autocomplete': 'new-password', 'class': 'form-control'}), help_text=password_validation.password_validators_help_text_html())
     new_password2 = forms.CharField(label=_("Confirm New Password"), strip=False, widget=forms.PasswordInput(
         attrs={'autocomplete': 'new-password', 'class': 'form-control'}))
+
 
 class UserPasswordResetForm(PasswordResetForm):
     email = forms.EmailField(label=('Email'), max_length=254, widget=forms.EmailInput(
@@ -59,15 +63,16 @@ class UserSetPasswordForm(SetPasswordForm):
 
 class ProfileForm(ModelForm):
     class Meta:
-        model=Profile
-        fields='__all__'
-        exclude= ['user','username']
+        model = Profile
+        fields = '__all__'
+        exclude = ['user', 'username']
+
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ["title","slug", "category", "product_image", "marked_price",
-                  "selling_price", "description","brand", "warranty", "return_policy"]
+        fields = ["title", "slug", "category", "product_image", "marked_price",
+                  "selling_price", "description", "brand", "warranty", "return_policy"]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control",
@@ -103,11 +108,27 @@ class ProductForm(forms.ModelForm):
             "warranty": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Enter the product warranty here..."
-            
+
             }),
             "return_policy": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Enter the product return policy here..."
             }),
-            
+
+        }
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category_choices
+        fields = ["title", "slug"]
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the unique product here..."
+            }),
+            "slug": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter the unique slug here..."
+            }),
         }

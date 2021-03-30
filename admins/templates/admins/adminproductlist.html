@@ -1,7 +1,7 @@
 {% extends 'layout-admin.html' %}
 {% load static %}
 {% block title %}
-<title>All products</title>
+<title>All Products</title>
 {% endblock %}
 
 
@@ -9,8 +9,9 @@
 <div class="container"> 
     <div class="row">
         <div class="col-md-12">
-            <h3>All Product list</h3><hr>
-            <a href="{% url 'adminproductcreate' %}">Add New Product</a>
+            <h3>All Product :List</h3><hr>
+           <h4> <a href="{% url 'adminproductcreate' %}" class="btn btn-primary">Add New Product</a></h4>
+            
             <table class="table table-striped">
                 <thead>
                     <tr>
