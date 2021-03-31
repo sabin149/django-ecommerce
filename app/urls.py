@@ -41,24 +41,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
 
-    # admins
-    path("admin-product/list", views.AdminProductListView.as_view(),
-         name="adminproductlist"),
-    path("admin-all-orders/", views.AdminOrderListView.as_view(),
-         name="adminorderlist"),
-    path("admin-product/add/", views.AdminProductCreateView.as_view(),
-         name="adminproductcreate"),
-
-    path("admin-category/list", views.AdminCategoryListView.as_view(),
-         name="admincategorylist"),
-
-    path("admin-category/add/", views.AdminCategoryCreateView.as_view(),
-         name="admincategorycreate"),
-
-    path("admin-order/<int:pk>/", views.AdminOrderDetailView.as_view(),
-         name="adminorderdetail"),
-    path("admin-order-<int:pk>-change/",
-         views.AdminOrderStatuChangeView.as_view(), name="adminorderstatuschange"),
 
 
 

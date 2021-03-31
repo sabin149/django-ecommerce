@@ -1,54 +1,71 @@
-{% extends 'layout-admin.html' %}
-{% load static %}
-{% block title %}
+{% extends 'layout-admin.html' %} {% block title %}
 <title>Admin-Dashboard</title>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <style>
-    .card-body a{
-    text-decoration:none;
-    color:#fff;
-    }
+  .card-body a {
+    text-decoration: none;
+    color: #fff;
+  }
 
-    .card-body a:hover{
-    color:orange;
-    }
+  .card-body a:hover {
+    color: orange;
+  }
 </style>
 <div class="container">
-
-    <h1>Dashboard</h1>
-    {% for message in messages %}
-    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-    <h6 class="success_message py-3 px-1 my-2 text-center">{{message}}</h6>
-    {% endif %}
-
-    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
-    <h6 class="error_message py-3 px-1 my-2 text-center">{{message}}</h6>
-    {% endif %}
-    {% endfor %}
-    <div class="row">
-        <div class="col">
-            <div class="card text-white bg-success mb-3" style="max-width: 35rem;">
-                <div class="card-header text-center">Total Users</div>
-                <div class="card-body">
-                    <a href="/admin-dashboard/show-user"><h1 class="card-title text-center">{{user_count}}</h1></a>
-
-                </div>
-            </div>
+  <h1>Dashboard</h1>
+  {% for message in messages %} {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+  <h6 class="success_message py-3 px-1 my-2 text-center">{{message}}</h6>
+  {% endif %} {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+  <h6 class="error_message py-3 px-1 my-2 text-center">{{message}}</h6>
+  {% endif %} {% endfor %}
+  <div class="row">
+    <div class="col">
+      <div class="card text-white bg-success mb-3" style="max-width: 35rem">
+        <div class="card-header text-center">Total Users</div>
+        <div class="card-body">
+          <a href="/admin-dashboard/show-user"
+            ><h1 class="card-title text-center">{{user_count}}</h1></a
+          >
         </div>
-        <div class="col">
-            <div class="card text-white bg-danger mb-3" style="max-width: 35rem;">
-                <div class="card-header text-center">Total Admins</div>
-                <div class="card-body">
- <a href="/admin-dashboard/show-admin"><h1 class="card-title text-center">{{admin_count}}</h1></a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    
+    <div class="col">
+      <div class="card text-white bg-danger mb-3" style="max-width: 35rem">
+        <div class="card-header text-center">Total Admins</div>
+        <div class="card-body">
+          <a href="/admin-dashboard/show-admin"
+            ><h1 class="card-title text-center">{{admin_count}}</h1></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  <div class="col">
+    <div class="card text-white bg-info mb-3" style="max-width: 35rem">
+      <div class="card-header text-center">Total Products</div>
+      <div class="card-body">
+        <a href="/admin-dashboard/admin-product/list"
+          ><h1 class="card-title text-center">{{product_count}}</h1></a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card text-white bg-secondary mb-3" style="max-width: 35rem">
+      <div class="card-header text-center">Total Category</div>
+      <div class="card-body">
+        <a href="/admin-dashboard/admin-category/list"
+          ><h1 class="card-title text-center">{{category_count}}</h1></a
+        >
+      </div>
+    </div>
+  </div>
+  </div>
+
+  
 </div>
 
 {% endblock %}
-
-

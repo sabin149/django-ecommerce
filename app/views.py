@@ -1,19 +1,16 @@
-from .auth import unauthenticated_user, user_only,admin_only
+from .auth import unauthenticated_user, user_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.views.generic import ListView, CreateView, DetailView, TemplateView
+from django.views.generic import TemplateView, View
 from django.http.response import HttpResponseRedirect
-from .forms import CategoryForm, CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProductForm, ProfileForm
+from .forms import CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProfileForm
 from django.contrib import messages
 from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile, STATUS_CHOICES
 from django.shortcuts import redirect, render
-from django.views.generic import TemplateView
 from django.core.paginator import Paginator
-from django.views import View
 from django.db.models import Q
-from django.urls import reverse_lazy
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
+ 
 
 class HomeView(TemplateView):
     template_name = "app/home.html"
@@ -314,66 +311,3 @@ def remove_cart(request):
 
 
 # Admins related
-
-@method_decorator(admin_only , name='dispatch')
-class AdminProductListView(ListView):
-    template_name = "admins/adminproductlist.html"
-    queryset = Product.objects.all().order_by("-id")
-    context_object_name = "allproducts"
-
-@method_decorator(admin_only , name='dispatch')
-class AdminProductCreateView(CreateView):
-    template_name = "admins/adminproductcreate.html"
-    form_class = ProductForm
-    success_url = reverse_lazy("adminproductlist")
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-@method_decorator(admin_only , name='dispatch')
-class AdminCategoryListView(ListView):
-    template_name = "admins/admincategorylist.html"
-    queryset = Category_choices.objects.all().order_by("-id")
-    context_object_name = "allcategory"
-
-@method_decorator(admin_only , name='dispatch')
-class AdminCategoryCreateView(CreateView):
-    template_name = "admins/admincategorycreate.html"
-    form_class = CategoryForm
-    success_url = reverse_lazy("admincategorylist")
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-@method_decorator(admin_only , name='dispatch')
-class AdminOrderDetailView(DetailView):
-    template_name = "admins/adminorderdetail.html"
-    model = OrderPlaced
-    context_object_name = "ord_obj"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["allstatus"] = STATUS_CHOICES
-        return context
-
-
-@method_decorator(admin_only , name='dispatch')
-class AdminOrderListView(ListView):
-    template_name = "admins/adminorderlist.html"
-    queryset = OrderPlaced.objects.all().order_by("-id")
-    context_object_name = "allorders"
-
-
-@method_decorator(admin_only , name='dispatch') 
-class AdminOrderStatuChangeView(View):
-    def post(self, request,*args, **kwargs):
-        order_id = self.kwargs["pk"]
-        order_obj = OrderPlaced.objects.get(id=order_id)
-
-        new_status = request.POST.get("status")
-        print(new_status)
-        order_obj.status = new_status
-        order_obj.save()
-        return redirect(reverse_lazy("adminorderdetail", kwargs={"pk": order_id}))

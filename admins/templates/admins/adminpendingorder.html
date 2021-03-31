@@ -1,34 +1,33 @@
 {% extends 'layout-admin.html' %}
 {% load static %}
 {% block title %}
-<title>All Orders</title>
+<title>All Pending Orders</title>
 {% endblock %}
 
 {% block content %}
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3>All Orders</h3><hr>
+            <h3>Accepted Orders</h3>
             <table class="table">
                 <thead>
                     <tr>
                         <th>SN</th>
                         <th>Order ID </th>
                         <th>Customer</th>
-                        {% comment %} <th>Product</th> {% endcomment %}
-                        <th>Ordered Date</th>
-                        <th>Status</th>
+                        <th>Ordered On</th>
+                        <th>Amount</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for order in allorders %}
+                    {% for order in pendingorders %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'adminorderdetail' order.id %}">#ORDER_{{order.id}}</a></td>
-                        <td>{{order.name}}</td>
-                        {% comment %} <td>{{order.product}}</td> {% endcomment %}
+                        <td>{{order.customer}}</td>
                         <td>{{order.ordered_date}}</td>
-                        <td>{{order.status}}</td>
+                        <td>{{order.total_cost}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
