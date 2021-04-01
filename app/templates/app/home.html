@@ -13,7 +13,7 @@
         <div class="col-md-3 card">
             <div class="m-4">
                 <a href="{% url 'productdetail' p.slug %}" class="btn">
-                <div class='item'><img src="{{p.product_image.url}}" alt="" class="img-fluid" style="height: 250; object-fit: cover;">
+                <div class='item'><img src="{{p.product_image.url}}" alt="" class="img-fluid" style="height: 200; object-fit: cover; width:200;>
                  <span class="fw-bold">{{p.title}}</span><br>
                 <span class="fs-5"><strike>Rs.{{p.marked_price}}</strike> Rs.{{p.selling_price}}</span>
                 </div>

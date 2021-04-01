@@ -26,13 +26,26 @@ Product Detail{% endblock title %}
       </h5>
       <br>
     
+ {% if request.user.is_authenticated %}
+      {% if item_already_in_cart %}
+      <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go To Cart</a>
+      {% else %}
+<form action="/add-to-cart">
+ <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
+ <button type="submit" class="btn btn-primary shadow  py-2 px-5">Add To Cart</button>
+</form>
+{% endif %}
+{% endif %}
+
+{% if not request.user.is_authenticated %}
 <form action="/add-to-cart">
  <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
  <button type="submit" class="btn btn-primary shadow  py-2 px-5">Add To Cart</button>
 </form>
 
+{% endif %}
 
-      <a href="" class="btn btn-danger shadow px-5 py-2 ms-3"> Buy Now </a>
+<a href="" class="btn btn-danger shadow px-5 py-2 ms-3"> Buy Now </a>
      <hr>
      <p class="">Warranty: {{product.warranty}}</p>
     <p class="">Return Policy:{{product.return_policy}}</p>

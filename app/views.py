@@ -37,11 +37,18 @@ class AllProductsView(TemplateView):
 class ProductDetailView(TemplateView):
     template_name = "app/productdetail.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,**kwargs):
+        
         context = super().get_context_data(**kwargs)
         url_slug = self.kwargs['slug']
         product = Product.objects.get(slug=url_slug)
-        context['product'] = product
+        item_already_in_cart = False
+        if request.user.is_authenticated:
+            totalitem = len(Cart.objects.filter(user=request.user))
+            item_already_in_cart = Cart.objects.filter(
+                Q(product=product.id) & Q(user=request.user)).exists()
+        
+        context={"product":product,"item_already_in_cart":item_already_in_cart,"totolitem":totalitem}
         return context
 
 
@@ -310,4 +317,3 @@ def remove_cart(request):
         return JsonResponse(data)
 
 
-# Admins related
