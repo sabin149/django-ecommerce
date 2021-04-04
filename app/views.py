@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, View
 from django.http.response import HttpResponseRedirect
 from .forms import CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProfileForm
 from django.contrib import messages
-from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile, STATUS_CHOICES
+from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
 from django.db.models import Q
