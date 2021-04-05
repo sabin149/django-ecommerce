@@ -134,7 +134,6 @@ def shippingaddress(request):
             city = fm.cleaned_data['city']
             province = fm.cleaned_data['province']
             zipcode = fm.cleaned_data['zipcode']
-
             reg = Customer(user=usr, name=name, address=address,
                            city=city, province=province, zipcode=zipcode)
             reg.save()
@@ -152,21 +151,18 @@ def delete_address(request, id):
         pi.delete()
         return HttpResponseRedirect('/shippingaddress')
 
-
 @login_required
 class update_address(View):
     def get(self, request, id):
         pi = Customer.objects.get(pk=id)
         fm = CustomerProfileForm(instance=pi)
         return render(request, 'app/updateaddress.html', {'form': fm})
-
     def post(self, request, id):
         pi = Customer.objects.get(pk=id)
         fm = CustomerProfileForm(request.POST, instance=pi)
         if fm.is_valid():
             fm.save()
         return HttpResponseRedirect('/shippingaddress')
-
 
 @login_required
 def checkout(request):
