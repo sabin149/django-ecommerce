@@ -110,6 +110,9 @@ class CustomerRegistrationView(View):
 @user_only
 @login_required
 def user_profile(request):
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
     profile = request.user.profile
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
@@ -119,12 +122,15 @@ def user_profile(request):
             messages.success(
                 request, 'Account Update Successful for ' + str(request.user))
             return redirect('/userprofile')
-    context = {'form': form}
+    context = {'form': form,'totalitem':totalitem}
     return render(request, 'app/user_profile.html', context)
 
 
 @login_required
 def shippingaddress(request):
+    totalitem = 0
+    if request.user.is_authenticated:
+        totalitem = len(Cart.objects.filter(user=request.user))
     if request.method == 'POST':
         fm = CustomerProfileForm(request.POST)
         if fm.is_valid():
@@ -141,7 +147,8 @@ def shippingaddress(request):
     else:
         fm = CustomerProfileForm()
     stud = Customer.objects.all()
-    return render(request, 'app/shippingaddress.html', {'form': fm, 'stu': stud})
+    context={'form': fm, 'stu': stud,'totalitem':totalitem}
+    return render(request, 'app/shippingaddress.html',context)
 
 
 @login_required

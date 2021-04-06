@@ -45,7 +45,7 @@ Product Detail{% endblock title %}
 
 {% endif %}
 
-<a href="" class="btn btn-danger shadow px-5 py-2 ms-3"> Buy Now </a>
+<a href="{% url 'checkout' %}" class="btn btn-danger shadow px-5 py-2 ms-3"> Buy Now </a>
      <hr>
      <p class="">Warranty: {{product.warranty}}</p>
     <p class="">Return Policy:{{product.return_policy}}</p>
