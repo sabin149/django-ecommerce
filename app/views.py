@@ -92,6 +92,8 @@ def login_user(request):
     return render(request, 'app/login.html', context)
 
 
+## views use garera garnu parcha
+
 class CustomerRegistrationView(View):
     def get(self, request):
         form = CustomerRegistrationForm()
@@ -100,10 +102,11 @@ class CustomerRegistrationView(View):
     def post(self, request):
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
-            messages.success(
-                request, 'Congratulations!! Registered Successfully')
             user = form.save()
             Profile.objects.create(user=user, username=user.username)
+            messages.add_message(
+                    request, messages.SUCCESS, 'User registered successfully')
+            return redirect('login')
         return render(request, 'app/customerregistration.html', {'form': form, 'active': 'btn-primary'})
 
 
