@@ -15,7 +15,6 @@
                         <th>SN</th>
                         <th>Order ID </th>
                         <th>Customer</th>
-                        {% comment %} <th>Product</th> {% endcomment %}
                         <th>Ordered Date</th>
                         <th>Status</th>
                     </tr>
@@ -25,8 +24,11 @@
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'adminorderdetail' order.id %}">#ORDER_{{order.id}}</a></td>
-                        <td>{{order.name}}</td>
-                        {% comment %} <td>{{order.product}}</td> {% endcomment %}
+
+                        {% for c in customer%}
+                        <td>{{c.name}}</td>
+                        {% endfor %}
+                        
                         <td>{{order.ordered_date}}</td>
                         <td>{{order.status}}</td>
                     </tr>

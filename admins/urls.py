@@ -14,7 +14,7 @@ urlpatterns=[
     path('register-user',views.register_user_admin),
     path("admin-product/list", views.AdminProductListView.as_view(),
          name="adminproductlist"),
-    path("admin-all-orders/", views.AdminOrderListView.as_view(),
+    path("admin-all-orders/", views.AdminOrderListView,
          name="adminorderlist"),
     path("admin-product/add/", views.AdminProductCreateView.as_view(),
          name="adminproductcreate"),

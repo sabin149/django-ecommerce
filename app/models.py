@@ -84,12 +84,7 @@ STATUS_CHOICES = (
 
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    city = models.CharField(max_length=200, null=True)
-    zipcode = models.IntegerField(null=True)
-    province = models.CharField(choices=PROVINCE_CHOICES, max_length=50)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)

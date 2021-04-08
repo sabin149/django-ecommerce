@@ -27,7 +27,7 @@ class CartModelAdmin(admin.ModelAdmin):
 
 @ admin.register(OrderPlaced)
 class OrderPlacedModelAdmin(admin.ModelAdmin):
-    list_display=['id','user','customer','name','address','city','zipcode','province','customer_info','product_info','product','quantity','ordered_date','status']
+    list_display=['id','user','customer','customer_info','product_info','product','quantity','ordered_date','status']
 
     def customer_info(self,obj):
         link=reverse("admin:app_customer_change",args=[obj.customer.pk])

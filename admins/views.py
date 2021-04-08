@@ -1,4 +1,4 @@
-from app.models import Product,Category_choices, OrderPlaced, STATUS_CHOICES
+from app.models import Customer, Product,Category_choices, OrderPlaced, STATUS_CHOICES
 from admins.forms import CategoryForm, ProductForm
 from app.auth import admin_only
 from django.contrib.auth.forms import UserCreationForm
@@ -115,18 +115,28 @@ class AdminOrderDetailView(DetailView):
     template_name = "admins/adminorderdetail.html"
     model = OrderPlaced
     context_object_name = "ord_obj"
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["allstatus"] = STATUS_CHOICES
         return context
 
 
-@method_decorator(admin_only , name='dispatch')
-class AdminOrderListView(ListView):
+
+
+# @method_decorator(admin_only , name='dispatch')
+# class AdminOrderListView(ListView):
+#     template_name = "admins/adminorderlist.html"
+#     queryset = OrderPlaced.objects.all().order_by("-id")
+#     context_object_name = "allorders"
+
+@admin_only
+def AdminOrderListView(request):
     template_name = "admins/adminorderlist.html"
-    queryset = OrderPlaced.objects.all().order_by("-id")
-    context_object_name = "allorders"
+    allorders = OrderPlaced.objects.all().order_by("-id")
+    customer=Customer.objects.all().order_by("-id")
+    context={'allorders':allorders,"customer":customer}
+    return render(request,template_name,context)
 
 
 @method_decorator(admin_only , name='dispatch') 
@@ -136,7 +146,6 @@ class AdminOrderStatuChangeView(View):
         order_obj = OrderPlaced.objects.get(id=order_id)
 
         new_status = request.POST.get("status")
-        print(new_status)
         order_obj.status = new_status
         order_obj.save()
         return redirect(reverse_lazy("adminorderdetail", kwargs={"pk": order_id}))

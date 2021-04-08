@@ -13,8 +13,7 @@
 </style>
 <div class="container">
   <h1>Dashboard</h1>
-  {% for message in messages %} {% if message.level ==
-  DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+  {% for message in messages %} {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
   <h6 class="success_message py-3 px-1 my-2 text-center">{{message}}</h6>
   {% endif %} {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
   <h6 class="error_message py-3 px-1 my-2 text-center">{{message}}</h6>

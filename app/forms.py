@@ -67,4 +67,3 @@ class ProfileForm(ModelForm):
         fields = '__all__'
         exclude = ['user', 'username']
 
-
