@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView, View
 from django.http.response import HttpResponseRedirect
-from .forms import CustomerRegistrationForm, CustomerProfileForm, LoginForm, ProfileForm
+from .forms import CustomerRegistrationForm, CustomerAddressForm, LoginForm, ProfileForm
 from django.contrib import messages
 from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile
 from django.shortcuts import redirect, render
@@ -129,13 +129,15 @@ def user_profile(request):
     return render(request, 'app/user_profile.html', context)
 
 
+
+
 @login_required
 def shippingaddress(request):
     totalitem = 0
     if request.user.is_authenticated:
         totalitem = len(Cart.objects.filter(user=request.user))
     if request.method == 'POST':
-        fm = CustomerProfileForm(request.POST)
+        fm = CustomerAddressForm(request.POST)
         if fm.is_valid():
             usr = request.user
             name = fm.cleaned_data['name']
@@ -146,30 +148,31 @@ def shippingaddress(request):
             reg = Customer(user=usr, name=name, address=address,
                            city=city, province=province, zipcode=zipcode)
             reg.save()
-            fm = CustomerProfileForm()
+            fm = CustomerAddressForm()
     else:
-        fm = CustomerProfileForm()
-    stud = Customer.objects.all()
+        fm = CustomerAddressForm()
+
+    stud = Customer.objects.filter(user=request.user)
     context={'form': fm, 'stu': stud,'totalitem':totalitem}
     return render(request, 'app/shippingaddress.html',context)
 
-
 @login_required
-def delete_address(request, id):
-    if request.method == 'POST':
-        pi = Customer.objects.get(pk=id)
+def delete_address(request,id):
+    if request.method=='POST':
+        pi=Customer.objects.get(pk=id)
         pi.delete()
         return HttpResponseRedirect('/shippingaddress')
 
-@login_required
+
 class update_address(View):
     def get(self, request, id):
         pi = Customer.objects.get(pk=id)
-        fm = CustomerProfileForm(instance=pi)
+        fm = CustomerAddressForm(instance=pi)
         return render(request, 'app/updateaddress.html', {'form': fm})
+        
     def post(self, request, id):
         pi = Customer.objects.get(pk=id)
-        fm = CustomerProfileForm(request.POST, instance=pi)
+        fm = CustomerAddressForm(request.POST, instance=pi)
         if fm.is_valid():
             fm.save()
         return HttpResponseRedirect('/shippingaddress')

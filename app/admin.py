@@ -10,7 +10,7 @@ admin.site.register(Profile)
 
 @ admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
-    list_display=['id','user','name','address','city','zipcode','province']
+    list_display=['id','name','address','city','zipcode','province']
 
 @ admin.register(Category_choices)
 class Category_choicesModelAdmin(admin.ModelAdmin):

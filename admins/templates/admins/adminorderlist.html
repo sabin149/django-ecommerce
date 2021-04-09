@@ -25,9 +25,9 @@
                         <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'adminorderdetail' order.id %}">#ORDER_{{order.id}}</a></td>
 
-                        {% for c in customer%}
-                        <td>{{c.name}}</td>
-                        {% endfor %}
+                    
+                        <td>{{order.customer.name}}</td>
+                    
                         
                         <td>{{order.ordered_date}}</td>
                         <td>{{order.status}}</td>

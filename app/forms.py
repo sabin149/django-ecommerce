@@ -1,4 +1,4 @@
-from .models import  Customer
+from .models import  Customer, OrderPlaced
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
@@ -31,7 +31,7 @@ class LoginForm(forms.Form):
         attrs={'autocomplete': 'current-password', 'class': 'form-control'}))
 
 
-class CustomerProfileForm(forms.ModelForm):
+class CustomerAddressForm(ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'address', 'city', 'province', 'zipcode']

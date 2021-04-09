@@ -24,16 +24,7 @@ PROVINCE_CHOICES = (
     ('Sudurpashchim Province','Sudurpashchim Province')
 )
 
-class Customer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    province = models.CharField(choices=PROVINCE_CHOICES, max_length=50)
-    zipcode = models.IntegerField()
 
-    def __str__(self):
-        return str(self.id)
 
 
 class Category_choices(models.Model):
@@ -57,7 +48,7 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to='productimg')
 
     def __str__(self):
-        return str(self.id)
+        return str(self.id)+" "+self.title+" "+self.slug+" "+str(self.marked_price)+" "+str(self.selling_price)+" "+(self.brand)+" "+ self.description+ " "+self.warranty+" "+self.return_policy+" " +str(self.category)+" "+str(self.product_image) 
 
 
 
@@ -79,17 +70,31 @@ STATUS_CHOICES = (
     ('On The Way', 'On The Way'),
     ('Delievered', 'Delievered'),
     ('Cancel', 'Cancel')
-)
+) 
+
+class Customer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    province = models.CharField(choices=PROVINCE_CHOICES, max_length=50)
+    zipcode = models.IntegerField()
+    
+    def __str__(self):
+        return str(self.id)+" "+self.name+" "+self.address+" "+self.city+" "+self.province+" "+str(self.zipcode) 
 
 
 class OrderPlaced(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
-        max_length=50, choices=STATUS_CHOICES, default='Pending')
+        max_length=50, choices=STATUS_CHOICES, default='Pending') 
+
+    def __str__(self):
+        return "Order: " + str(self.id)
 
     @property
     def total_cost(self):

@@ -115,7 +115,7 @@ class AdminOrderDetailView(DetailView):
     template_name = "admins/adminorderdetail.html"
     model = OrderPlaced
     context_object_name = "ord_obj"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["allstatus"] = STATUS_CHOICES
@@ -123,19 +123,11 @@ class AdminOrderDetailView(DetailView):
 
 
 
-
-# @method_decorator(admin_only , name='dispatch')
-# class AdminOrderListView(ListView):
-#     template_name = "admins/adminorderlist.html"
-#     queryset = OrderPlaced.objects.all().order_by("-id")
-#     context_object_name = "allorders"
-
 @admin_only
 def AdminOrderListView(request):
     template_name = "admins/adminorderlist.html"
     allorders = OrderPlaced.objects.all().order_by("-id")
-    customer=Customer.objects.all().order_by("-id")
-    context={'allorders':allorders,"customer":customer}
+    context={'allorders':allorders}
     return render(request,template_name,context)
 
 
