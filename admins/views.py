@@ -1,4 +1,6 @@
-from app.models import Customer, Product,Category_choices, OrderPlaced, STATUS_CHOICES
+from app.forms import CustomerRegistrationForm
+from django.http.response import HttpResponseRedirect
+from app.models import Product,Category_choices, OrderPlaced, STATUS_CHOICES
 from admins.forms import CategoryForm, ProductForm
 from app.auth import admin_only
 from django.contrib.auth.forms import UserCreationForm
@@ -10,6 +12,72 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, View,TemplateView
 from django.urls import reverse_lazy
+
+@admin_only
+@login_required
+def delete_product(request,id):
+    if request.method=='POST':
+        pi=Product.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/admin-dashboard/admin-product/list')
+
+@method_decorator(login_required,name='dispatch')
+@method_decorator(admin_only,name='dispatch')
+class update_product(View):
+    def get(self, request, id):
+        pi = Product.objects.get(pk=id)
+        fm = ProductForm(instance=pi)
+        return render(request, 'admins/adminupdateproduct.html', {'form': fm})
+        
+    def post(self, request, id):
+        pi = Product.objects.get(pk=id)
+        fm = ProductForm(request.POST, instance=pi)
+        if fm.is_valid():
+            fm.save()
+        return HttpResponseRedirect('/admin-dashboard/admin-product/list')
+
+@admin_only
+@login_required
+def delete_category(request,id):
+    if request.method=='POST':
+        pi=Category_choices.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/admin-dashboard/admin-category/list')
+
+@method_decorator(login_required,name='dispatch')
+@method_decorator(admin_only,name='dispatch')
+class update_category(View):
+    def get(self, request, id):
+        pi = Category_choices.objects.get(pk=id)
+        fm = CategoryForm(instance=pi)
+        return render(request, 'admins/adminupdatecategory.html', {'form': fm})
+        
+    def post(self, request, id):
+        pi = Category_choices.objects.get(pk=id)
+        fm = CategoryForm(request.POST, instance=pi)
+        if fm.is_valid():
+            fm.save()
+        return HttpResponseRedirect('/admin-dashboard/admin-category/list')
+
+
+@admin_only
+@login_required
+def delete_order(request,id):
+    if request.method=='POST':
+        pi=OrderPlaced.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/admin-dashboard/admin-all-orders')
+
+
+@admin_only
+@login_required
+def delete_user(request,id):
+    if request.method=='POST':
+        pi=User.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/admin-dashboard/show-user')
+
+
 
 
 @admin_only
@@ -63,16 +131,17 @@ def update_user_to_admin(request, user_id):
 @login_required
 def register_user_admin(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, 'User Registered Successfully')
-            return redirect('/admin-dashboard')
+            # messages.add_message(request, messages.SUCCESS, 'User Registered Successfully')
+            return redirect('/admin-dashboard/show-user')
+
         else:
             messages.add_message(request, messages.ERROR, 'Please provide correct details')
             return render(request, "admins/register-user-admin.html", {'form': form})
     context = {
-        'form': UserCreationForm
+        'form': CustomerRegistrationForm
     }
     return render(request, 'admins/register-user-admin.html', context)
 

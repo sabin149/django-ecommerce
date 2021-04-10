@@ -1,5 +1,6 @@
 {% extends 'app/base.html' %} {% load static %} {% block title %}Customer
 Registration{% endblock title %} {% block main-content %}
+
 <div class="container">
   <div class="row my-3">
     <div class="col-sm-6 offset-sm-3">
@@ -18,7 +19,7 @@ Registration{% endblock title %} {% block main-content %}
           <small class="text-danger"> {{fm.errors|striptags}} </small>
         </div>
         {% endfor %}
-        <input type="submit" value="Submit" class="btn btn-primary">
+        <input type="submit" value="Submit" class="btn btn-dark text-white">
         <br>
         <div class="text-center text-primary fw-bold">
         {% if form.non_field_errors %}

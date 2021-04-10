@@ -1,35 +1,54 @@
-{% extends 'layout-admin.html' %}
-{% load static %}
-{% block title %}
+{% extends 'layout-admin.html' %} {% load static %} {% block title %}
 <title>All Category</title>
-{% endblock %}
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>All Category List</h3>
+      <hr />
+      <h4>
+        <a href="{% url 'admincategorycreate' %}" class="btn btn-primary"
+          >Add New Category</a
+        >
+      </h4>
+      <div class="table-responsive">
+      <table class="table ">
+        <thead class="thead-info">
+          <tr>
+            <th>SN</th>
+            <th>Product Category</th>
+            <th>Slug</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in allcategory %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{c.title}}</td>
+            <td>{{c.slug}}</td>
+            <td>
+              <a
+                href="{% url 'updatecategory' c.id %}"
+                class="btn btn-warning btn-sm"
+                >Edit</a
+              >
 
-
-{% block content %}
-<div class="container"> 
-    <div class="row">
-        <div class="col-md-12">
-            <h3>All Category List</h3><hr>
-            <h4><a href="{% url 'admincategorycreate' %}" class="btn btn-primary">Add New Category</a></h4>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Product Category</th>
-                        <th>Slug</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in allcategory %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{c.title}}</td>
-                        <td>{{c.slug}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+              <form
+                action="{% url 'deletecategory' c.id %}"
+                method="POST"
+                class="d-inline"
+              >
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this category?')">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

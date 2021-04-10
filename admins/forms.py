@@ -1,4 +1,4 @@
-from app.models import Category_choices, Product
+from app.models import Category_choices, OrderPlaced, Product
 from django import forms
 
 
@@ -66,3 +66,4 @@ class CategoryForm(forms.ModelForm):
                 "placeholder": "Enter the unique slug here..."
             }),
         }
+

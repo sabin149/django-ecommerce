@@ -1,52 +1,78 @@
-{% extends 'layout-admin.html' %}
-{% load static %}
-{% block title %}
+{% extends 'layout-admin.html' %} {% load static %} {% block title %}
 <title>All Products</title>
-{% endblock %}
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="mt-3">All Product List:</h3>
+      <hr />
+      <h4>
+        <a href="{% url 'adminproductcreate' %}" class="btn btn-primary"
+          >Add New Product</a
+        >
+      </h4>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-info">
+            <tr>
+              <th>SN</th>
+              <th>Product Title</th>
+              <th>Slug</th>
+              <th>Marked Price</th>
+              <th>Selling Price</th>
+              <th>Description</th>
+              <th>Brand</th>
+              <th>Warranty</th>
+              <th>Return Policy</th>
+              <th>Category</th>
+              <th>Product Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in allproducts %}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{p.title}}</td>
+              <td>{{p.slug}}</td>
+              <td>{{p.marked_price}}</td>
+              <td>{{p.selling_price}}</td>
+              <td>{{p.description}}</td>
+              <td>{{p.brand}}</td>
+              <td>{{p.warranty}}</td>
+              <td>{{p.return_policy}}</td>
+              <td>{{p.category}}</td>
+              <td>
+                <img
+                  src="{{p.product_image.url}}"
+                  style="height: 60px"
+                  alt=""
+                />
+              </td>
+              <td>
+                <a
+                  href="{% url 'updateproduct' p.id %}"
+                  class="btn btn-warning btn-sm"
+                  >Edit</a
+                >
+              </td>
 
-
-{% block content %}
-<div class="container"> 
-    <div class="row">
-        <div class="col-md-12">
-            <h3>All Product :List</h3><hr>
-           <h4> <a href="{% url 'adminproductcreate' %}" class="btn btn-primary">Add New Product</a></h4>
-            
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Product Title</th>
-                        <th>Slug</th>
-                        <th> Marked Price</th>
-                        <th> Selling Price</th>
-                        <th>Brand</th>
-                        <th>Description</th>
-                        <th>Warranty</th>
-                        <th>Category</th>
-                        <th>Product Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for p in allproducts %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{p.title}}</td>
-                        <td>{{p.slug}}</td>
-                        <td>{{p.marked_price}}</td>
-                        <td>{{p.selling_price}}</td>
-                        <td>{{p.description}}</td>
-                        <td>{{p.brand}}</td>
-                        <td>{{p.description}}</td>
-                        <td>{{p.warranty}}</td>
-                        <td>{{p.return_policy}}</td>
-                        <td>{{p.category}}</td>
-                        <td><img src="{{p.product_image.url}}" style="height: 60px;" alt=""></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+              <td>
+                <form
+                  action="{% url 'deleteproduct' p.id %}"
+                  method="POST"
+                  class="d-inline"
+                >
+                  {% csrf_token %}
+                  <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure want to delete this product?')">
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.utils.decorators import method_decorator
 from .auth import unauthenticated_user, user_only
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -75,8 +76,7 @@ def login_user(request):
                                     password=data['password'])
                 if user is not None:
                     if not user.is_staff:
-                        login(request, user)
-                        
+                        login(request, user)     
                         return redirect('home')
                     elif user.is_staff:
                         login(request, user)
@@ -92,26 +92,21 @@ def login_user(request):
     return render(request, 'app/login.html', context)
 
 
-## views use garera garnu parcha
-
-class CustomerRegistrationView(View):
-    def get(self, request):
-        form = CustomerRegistrationForm()
-        return render(request, 'app/customerregistration.html', {'form': form})
-
-    def post(self, request):
+@unauthenticated_user
+def CustomerRegistrationView(request):
+    if request.method == 'POST':
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            Profile.objects.create(user=user, username=user.username)
-            messages.add_message(
-                    request, messages.SUCCESS, 'User registered successfully')
-            return redirect('login')
-        return render(request, 'app/customerregistration.html', {'form': form, 'active': 'btn-primary'})
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'User Registered Successfully')
+            return redirect('/login')
+        else:
+            messages.add_message(request, messages.ERROR, 'Please provide correct details')
+            return render(request, "app/customerregistration.html", {'form': form})
+    return render(request, 'app/customerregistration.html', {'form': CustomerRegistrationForm, 'active': 'btn-primary'})
 
-
-@user_only
 @login_required
+@user_only
 def user_profile(request):
     totalitem = 0
     if request.user.is_authenticated:
@@ -163,7 +158,7 @@ def delete_address(request,id):
         pi.delete()
         return HttpResponseRedirect('/shippingaddress')
 
-
+@method_decorator(login_required,name='dispatch')
 class update_address(View):
     def get(self, request, id):
         pi = Customer.objects.get(pk=id)

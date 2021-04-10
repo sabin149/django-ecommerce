@@ -1,10 +1,11 @@
 {% extends 'app/base.html' %} {% block main-content %}
+{% load bootstrap %}
 <div class="row">
   <div class="col-sm-8 offset-2">
     <h4 class="alert alert-info">Update Address</h4>
     <form action="" method="POST">
       {% csrf_token %} 
-      {{form.as_p}}
+      {{ form | bootstrap_horizontal }}
       <input type="submit" class="btn btn-success" value="Update" />
     </form>
   </div>

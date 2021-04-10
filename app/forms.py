@@ -1,4 +1,4 @@
-from .models import  Customer, OrderPlaced
+from .models import  Customer
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
@@ -26,9 +26,9 @@ class CustomerRegistrationForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     username = UsernameField(widget=forms.TextInput(
-        attrs={'autofocus': True, 'class': 'form-control'}))
+        attrs={'autofocus': True, 'class': 'form-control','placeholder':'Enter Your Username'}))
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(
-        attrs={'autocomplete': 'current-password', 'class': 'form-control'}))
+        attrs={'autocomplete': 'current-password', 'class': 'form-control','placeholder':'Enter Your Password'}))
 
 
 class CustomerAddressForm(ModelForm):

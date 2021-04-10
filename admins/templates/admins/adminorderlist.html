@@ -1,41 +1,52 @@
-{% extends 'layout-admin.html' %}
-{% load static %}
-{% block title %}
+{% extends 'layout-admin.html' %} {% load static %} {% block title %}
 <title>All Orders</title>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>All Orders</h3><hr>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Order ID </th>
-                        <th>Customer</th>
-                        <th>Ordered Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in allorders %}
-                    <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td><a href="{% url 'adminorderdetail' order.id %}">#ORDER_{{order.id}}</a></td>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>All Orders</h3>
+      <hr />
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Ordered Date</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in allorders %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>
+              <a href="{% url 'adminorderdetail' order.id %}"
+                >#ORDER_{{order.id}}</a
+              >
+            </td>
 
-                    
-                        <td>{{order.customer.name}}</td>
-                    
-                        
-                        <td>{{order.ordered_date}}</td>
-                        <td>{{order.status}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            <td>{{order.customer.name}}</td>
+
+            <td>{{order.ordered_date}}</td>
+            <td>{{order.status}}</td>
+            <td>
+             
+              <form
+                action="{% url 'deleteorder' order.id %}"
+                method="POST"
+                class="d-inline"
+              >
+                {% csrf_token %}
+                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to delete order user?')">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 {% endblock %}

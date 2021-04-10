@@ -1,40 +1,44 @@
-{% extends 'app/base.html' %} 
-{% load static %} 
+{% extends 'app/base.html' %}
+
+{% load bootstrap %} 
+{% load static %}
 {% block title %}
 Login
 {% endblock title %}
  {% block main-content %}
+
 <div class="container">
   <div class="row my-3">
     <div class="col-sm-6 offset-sm-3">
-      <h3>Login</h3>
+    {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <h6 class="success_message py-3 px-1 my-2 text-center">{{message}}</h6>
+            {% endif %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+            <h6 class="error_message py-3 px-1 my-2 text-center bg-danger text-white">{{message}}</h6>
+            {% endif %}
+            {% endfor %}
+      <h3 class="text-center">Login</h3>
       <hr>
-      <form action="" method="post" novalidate class="shadow p-5">
+      <form action="" method="post" class="shadow p-5">
         {% csrf_token %} 
-        {% for fm in form %}
-        <div class="form-group">
-          {{fm.label_tag}} {{fm}}
-          <small class="text-danger">{{fm.errors|striptags}}</small><br>
-        </div>
-        {% endfor %} 
+  {{ form | bootstrap_horizontal }}
          <small>
           <a href="{% url 'password_reset' %}">Forgot Password? </a> </small>
         <br>
-        <input type="submit" value="Login" class="btn btn-primary mt-4" />
+        <input type="submit" value="Login" class="btn btn-dark mt-4" />
         <br>
-        <div class="text-center text-primary fw-bold">
+        <div class="text-center fw-bold">
           <small
             >New To Gaming Accessories House?
             <a href="{% url 'customerregistration' %}" class="text-center"
               >Create an Account</a>
           </small>
         </div>
-        {% if form.non_field_errors %} 
-        {% for error in form.non_field_errors %}
-        <p class="alert alert-danger my-3">{{error}}</p>
-        {% endfor %} {% endif %}
       </form>
     </div>
   </div>
 </div>
+
 {% endblock main-content %}
