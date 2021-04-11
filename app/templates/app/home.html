@@ -24,9 +24,12 @@ transition: transform .2s;
         <div class="col-md-3 card">
             <div class="m-4">
                 <a href="{% url 'productdetail' p.slug %}" class="btn">
-                <div class='item'><img src="{{p.product_image.url}}" alt="" class="img-fluid product" style="height: 200; object-fit: cover; width:100%;">
-                 <span class="fw-bold">{{p.title}}</span><br>
-                <span class="fs-5"><strike class="fs-6 text-info">Rs.{{p.marked_price}}</strike> Rs.{{p.selling_price}}</span>
+                <div class='item'><img src="{{p.product_image.url}}" alt="" class=" product w-100">
+                 <h3>{{p.title}}</h3><br>
+                {% comment %} <span class="fs-5"><strike class="fs-6 text-info">Rs.{{p.marked_price}}</strike> Rs.{{p.selling_price}}</span> {% endcomment %}
+
+                <strike><span class="fs-6 text-info">Rs. {{p.marked_price}}</span></strike>
+                <span class="fs-5">Rs. {{p.selling_price}}</span>
                 </div>
             
                 </a>

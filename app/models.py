@@ -14,6 +14,9 @@ class Profile(models.Model):
     profile_pic=models.FileField(upload_to='static/uploads',default='static/app/images/cart.png')
     created_date=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.id)+" "+self.phone+" "+self.address+" "+self.email+" "+str(self.profile_pic)
+
 PROVINCE_CHOICES = (
     ('Province No. 1', 'Province No. 1'),
     ('Province No. 2', 'Province No. 2'),
@@ -38,8 +41,8 @@ class Category_choices(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    marked_price = models.FloatField()
-    selling_price = models.FloatField()
+    marked_price = models.IntegerField()
+    selling_price = models.IntegerField()
     brand = models.CharField(max_length=100)
     description = models.TextField()
     warranty = models.CharField(max_length=300,  blank=True,null=True)
@@ -87,6 +90,7 @@ class Customer(models.Model):
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)

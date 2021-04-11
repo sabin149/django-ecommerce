@@ -32,14 +32,18 @@
             <td>{{order.ordered_date}}</td>
             <td>{{order.status}}</td>
             <td>
-             
               <form
                 action="{% url 'deleteorder' order.id %}"
                 method="POST"
                 class="d-inline"
               >
                 {% csrf_token %}
-                <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to delete order user?')">
+                <input
+                  type="submit"
+                  value="Delete"
+                  class="btn btn-danger"
+                  onclick="return confirm('Are you sure want to delete order user?')"
+                />
               </form>
             </td>
           </tr>

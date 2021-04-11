@@ -1,5 +1,5 @@
 {% extends 'layout-admin.html' %}
-{% load static %}
+
 {% block title %}
 <title>Order detail</title>
 {% endblock %}
@@ -8,39 +8,56 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <h3>Order Detail</h3>
-            <hr>
+            <h3 class="text-center mt-2">Order Details</h3>
+            <hr class="bg-light">
             <p><span class="font-weight-bold">Order ID: </span> #ORDER_{{ord_obj.id}}</p>
             <p><span class="font-weight-bold">Order Status: </span> {{ord_obj.status}}</p>
             <p><span class="font-weight-bold">Order On: </span> {{ord_obj.ordered_date}}({{ord_obj.ordered_date|timesince}} ago)</p>
+            <p> <span class="font-weight-bold">Customer Image: </span></p>
+            <p> <span class="font-weight-bold"> <img src="{{ord_obj.profile.profile_pic.url}}" alt="" class="rounded-circle"></span></p>
             <p><span class="font-weight-bold">Customer Name: </span> {{ord_obj.customer.name}}</p>
+            <p><span class="font-weight-bold">Phone Number: </span> {{ord_obj.profile.phone}}</p>
+            <p><span class="font-weight-bold">Customer Email: </span> {{ord_obj.profile.email}}</p>
             <p><span class="font-weight-bold">Zip Code: </span> {{ord_obj.customer.zipcode}}</p>
             <p><span class="font-weight-bold">Shipping Address: </span>{{ord_obj.customer.address}},{{ord_obj.customer.city}}</p>
-            <h4>Ordered Items</h4>
-            <table class="table">
-               <div class="col-sm-6">
-      <hr>
-     
-      <div class="card mb-2">
-        <div class="card-body">
-        <p><img src="{{ord_obj.product.product_image.url}}" alt="" class="img-fluid"></p>
-          <h5>Product: {{ord_obj.product.title}}</h5>
-          <p>Quantity: {{ord_obj.quantity}}</p>
-          <p class="fw-bold">Price: {{ord_obj.total_cost}}</p>
-        </div>
-      </div>
-
-      <p class="fw-bold">Total Cost= {{ord_obj.total_cost}} </p>
-    </div>
+            <h4 class="text-center">Ordered Items</h4>
+            <table class="table table-responsive">
+    <thead class="">
+                    <tr>
+                        <th>Product Title</th>
+                        <th>Product Image</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                         <td>{{ord_obj.product.title}}</td>
+                        <td>
+                        <img src="{{ord_obj.product.product_image.url}}" alt="" class="w-25 ">                    
+                        </td>
+                        <td>{{ord_obj.product.selling_price}}</td>
+                        <td>{{ord_obj.quantity}}</td>
+                        <td>{{ord_obj.total_cost}}</td>
+                      
+                    </tr>
+                                 
+                 <tr>
+                 <th colspan="7" class="text-right">Total: Rs {{ord_obj.total_cost}}/-</th>
+            
+                    </tr>
+                </tbody>
             </table>
             <form action="{% url 'adminorderstatuschange' ord_obj.id %}" method="POST">
                 {% csrf_token %}
-                <select name="status">
+                <h4>Change Order Status</h4>
+                <select name="status" class="form-select form-select-sm alert">
                     {% for i, j in allstatus %}
-                    <option value="{{i}}" {% if i == ord_obj.status_choices %}selected{% endif %}>{{j}}</option>
+                    <option class="" value="{{i}}" {% if i == ord_obj.status_choices %}selected{% endif %} >{{j}}</option>
                     {% endfor %}
                 </select>
-                <button class="btn btn-info" type="submit" >Change</button>
+                <button class="btn btn-info btn-lg" type="submit" >Change</button>
                 
             </form>
         </div>

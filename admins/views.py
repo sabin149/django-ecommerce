@@ -3,7 +3,6 @@ from django.http.response import HttpResponseRedirect
 from app.models import Product,Category_choices, OrderPlaced, STATUS_CHOICES
 from admins.forms import CategoryForm, ProductForm
 from app.auth import admin_only
-from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User

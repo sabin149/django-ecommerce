@@ -12,21 +12,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
  
+
 class HomeView(TemplateView):
-    def get(self,request):
-        totalitem = 0
-        if request.user.is_authenticated:
-            totalitem = len(Cart.objects.filter(user=request.user))
-        all_products = Product.objects.all().order_by("-id")
-        paginator = Paginator(all_products, 8)
-        page_number = self.request.GET.get('page')
-        product_list = paginator.get_page(page_number)
-        template_name = "app/home.html"
-        context={'product_list':product_list,'totalitem':totalitem}
-        return render(request,template_name,context)
-
-
-class AllProductsView(TemplateView):
     def get(self,request):
         totalitem = 0
         if self.request.user.is_authenticated:
