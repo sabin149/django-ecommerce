@@ -64,7 +64,7 @@ def login_user(request):
                 if user is not None:
                     if not user.is_staff:
                         login(request, user)     
-                        return redirect('home')
+                        return redirect('all-products')
                     elif user.is_staff:
                         login(request, user)
                         return redirect('/admin-dashboard')
