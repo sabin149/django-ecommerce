@@ -1,6 +1,6 @@
 from app.forms import CustomerRegistrationForm
 from django.http.response import HttpResponseRedirect
-from app.models import Product,Category_choices, OrderPlaced, STATUS_CHOICES
+from app.models import Product,Category_choices, OrderPlaced, ProductImage,STATUS_CHOICES
 from admins.forms import CategoryForm, ProductForm
 from app.auth import admin_only
 from .models import *
@@ -159,7 +159,10 @@ class AdminProductCreateView(CreateView):
     success_url = reverse_lazy("adminproductlist")
 
     def form_valid(self, form):
-        form.save()
+        p = form.save()
+        more_images = self.request.FILES.getlist("more_images")
+        for i in more_images:
+            ProductImage.objects.create(product=p, image=i)
         return super().form_valid(form)
 
 @method_decorator(admin_only , name='dispatch')

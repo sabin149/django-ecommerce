@@ -1,12 +1,17 @@
 from django.contrib import admin
-from .models import (Customer,Category_choices,Product,Cart,OrderPlaced,Profile)
+from .models import (Customer,Category_choices,Product,Cart,OrderPlaced, ProductImage,Profile)
 from django.utils.html import format_html
 from django.urls import reverse
 
 
-# Register your models here.
 
-admin.site.register(Profile)
+@ admin.register(ProductImage)
+class CustomerModelAdmin(admin.ModelAdmin):
+    list_display=['id','product','more_images']
+
+@ admin.register(Profile)
+class CustomerModelAdmin(admin.ModelAdmin):
+    list_display=['id','user','firstname','lastname','phone','address','email','username','profile_pic','created_date']
 
 @ admin.register(Customer)
 class CustomerModelAdmin(admin.ModelAdmin):
@@ -18,7 +23,7 @@ class Category_choicesModelAdmin(admin.ModelAdmin):
 
 @ admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display=['id','title','slug','marked_price','selling_price','brand','description','warranty','return_policy','category','product_image']
+    list_display=['id','title','slug','marked_price','selling_price','brand','description','category','product_image']
 
 @ admin.register(Cart)
 class CartModelAdmin(admin.ModelAdmin):

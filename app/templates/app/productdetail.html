@@ -1,55 +1,90 @@
-{% extends 'app/base.html' %} {% load static %} {% block title %}
-Product Detail{% endblock title %} 
-{% block main-content %}
+{% extends 'app/base.html' %} {% load static %} {% block title %} Product
+Detail{% endblock title %} {% block main-content %}
 
-<div class="container my-5">
-  <div class="row">
-    <div class="col-sm-6 text-center align-self-center">
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-sm-2">
+      <div class="pt-3">
+        {% for pi in product.productimage_set.all %}
+        <ul>
+          <li>
+            <img
+              src="{{pi.image1.url}}"
+              class="img-fluid small-img"
+              style="height: 100px; object-fit: contain"
+              alt=""
+            />
+          </li>
+        </ul>
+
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-sm-5">
       <img
         src="{{product.product_image.url}}"
         alt=""
-        class="img-fluid img-thumbnail">
+        class="img-fluid img-thumbnail"
+      />
     </div>
-    <div class="col-sm-5 offset-sm-1">
+    <div class="col-sm-5">
       <h2>Product Title: {{product.title}}</h2>
       <h3>Category: {{product.category}}</h3>
-      <hr>
+      <hr />
       <h3>Product Description</h3>
       <p>{{product.description}}</p>
       <h3>Brand</h3>
       <p>{{product.brand}}</p>
-      <hr>
+      <hr />
       <h5>
         Rs. {{product.marked_price}}
         <small class="fw-light text-decoration-line-through"
-          >{{product.selling_price}}</small> 
+          >{{product.selling_price}}</small
+        >
       </h5>
-      <br>
-    
- {% if request.user.is_authenticated %}
-      {% if item_already_in_cart %}
-      <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go To Cart</a>
+      <br />
+
+      {% if request.user.is_authenticated %} {% if item_already_in_cart %}
+      <a
+        href="{% url 'showcart' %}"
+        class="btn btn-warning shadow px-5 py-2 ms-4"
+        >Go To Cart</a
+      >
       {% else %}
-<form action="/add-to-cart">
- <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
- <button type="submit" class="btn btn-primary shadow  py-2 px-5">Add To Cart</button>
-</form>
-{% endif %}
-{% endif %}
+      <form action="/add-to-cart">
+        <input
+          type="hidden"
+          name="prod_id"
+          value="{{product.id}}"
+          id="prod_id"
+        />
+        <button type="submit" class="btn btn-primary shadow py-2 px-5">
+          Add To Cart
+        </button>
+      </form>
+      {% endif %} {% endif %} {% if not request.user.is_authenticated %}
+      <form action="/add-to-cart">
+        <input
+          type="hidden"
+          name="prod_id"
+          value="{{product.id}}"
+          id="prod_id"
+        />
+        <button type="submit" class="btn btn-primary shadow py-2 px-5">
+          Add To Cart
+        </button>
+      </form>
 
-{% if not request.user.is_authenticated %}
-<form action="/add-to-cart">
- <input type="hidden" name="prod_id" value={{product.id}} id="prod_id">
- <button type="submit" class="btn btn-primary shadow  py-2 px-5">Add To Cart</button>
-</form>
+      {% endif %}
 
-{% endif %}
-
-<a href="{% url 'checkout' %}" class="btn btn-danger shadow px-5 py-2 ms-3"> Buy Now </a>
-     <hr>
-     <p class="">Warranty: {{product.warranty}}</p>
-    <p class="">Return Policy:{{product.return_policy}}</p>
-     <hr>
+      <a
+        href="{% url 'checkout' %}"
+        class="btn btn-danger shadow px-5 py-2 ms-3"
+      >
+        Buy Now
+      </a>
+     
     </div>
   </div>
 </div>

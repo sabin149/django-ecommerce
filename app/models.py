@@ -45,14 +45,18 @@ class Product(models.Model):
     selling_price = models.IntegerField()
     brand = models.CharField(max_length=100)
     description = models.TextField()
-    warranty = models.CharField(max_length=300,  blank=True,null=True)
-    return_policy = models.CharField(max_length=300, blank=True,null=True)
     category = models.ForeignKey(Category_choices,on_delete=models.CASCADE)
     product_image = models.ImageField(upload_to='productimg')
 
     def __str__(self):
-        return str(self.id)+" "+self.title+" "+self.slug+" "+str(self.marked_price)+" "+str(self.selling_price)+" "+(self.brand)+" "+ self.description+ " "+self.warranty+" "+self.return_policy+" " +str(self.category)+" "+str(self.product_image) 
+        return str(self.id)+" "+self.title+" "+self.slug+" "+str(self.marked_price)+" "+str(self.selling_price)+" "+(self.brand)+" "+ self.description +str(self.category)+" "+str(self.product_image) 
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,null=True)
+    more_images = models.ImageField(upload_to="productimg/images")
+
+    def __str__(self):
+        return str(self.id)+" "+str(self.product)+" "+str(self.more_images)
 
 
 class Cart(models.Model):

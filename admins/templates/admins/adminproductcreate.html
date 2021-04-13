@@ -13,7 +13,7 @@
             <hr>
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form}}
                 <button class="btn btn-info">Save</button>
             </form>
         </div>

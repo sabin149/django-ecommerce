@@ -1,12 +1,13 @@
-from app.models import Category_choices, OrderPlaced, Product
+from app.models import Category_choices, Product
 from django import forms
 
 
 class ProductForm(forms.ModelForm):
+    more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={"class": "form-control","multiple": True}))
     class Meta:
         model = Product
         fields = ["title", "slug", "category", "product_image", "marked_price",
-                  "selling_price", "description", "brand", "warranty", "return_policy"]
+                  "selling_price", "description", "brand"]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-control",
@@ -22,6 +23,7 @@ class ProductForm(forms.ModelForm):
             "product_image": forms.ClearableFileInput(attrs={
                 "class": "form-control"
             }),
+
             "marked_price": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Marked price of the product..."
@@ -38,16 +40,7 @@ class ProductForm(forms.ModelForm):
             "brand": forms.TextInput(attrs={
                 "class": "form-control",
                 "placeholder": "Enter the product brand here..."
-            }),
-            "warranty": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "Enter the product warranty here..."
-
-            }),
-            "return_policy": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "Enter the product return policy here..."
-            }),
+            })
 
         }
 

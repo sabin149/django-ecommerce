@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'GamingAccessoriesHouse.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gaming_accessories_house',
+        'NAME': 'new',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
