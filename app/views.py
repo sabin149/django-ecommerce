@@ -84,16 +84,18 @@ def CustomerRegistrationView(request):
     if request.method == 'POST':
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user=form.save()
+            Profile.objects.create(user=user,username=user.username)
             messages.add_message(request, messages.SUCCESS, 'User Registered Successfully')
             return redirect('/login')
         else:
-            messages.add_message(request, messages.ERROR, 'Please provide correct details')
+            messages.add_message(request, messages.ERROR, 'Please Provide Correct Details')
             return render(request, "app/customerregistration.html", {'form': form})
-    return render(request, 'app/customerregistration.html', {'form': CustomerRegistrationForm, 'active': 'btn-primary'})
+    return render(request, 'app/customerregistration.html', {'form': CustomerRegistrationForm})
 
-@login_required
+
 @user_only
+@login_required
 def user_profile(request):
     totalitem = 0
     if request.user.is_authenticated:
@@ -105,14 +107,14 @@ def user_profile(request):
         if form.is_valid():
             form.save()
             messages.success(
-                request, 'Account Update Successful for ' + str(request.user))
+                request, 'Account Updated Successfully')
             return redirect('/userprofile')
     context = {'form': form,'totalitem':totalitem}
     return render(request, 'app/user_profile.html', context)
 
 
 
-
+@user_only
 @login_required
 def shippingaddress(request):
     totalitem = 0
@@ -138,6 +140,8 @@ def shippingaddress(request):
     context={'form': fm, 'stu': stud,'totalitem':totalitem}
     return render(request, 'app/shippingaddress.html',context)
 
+
+@user_only
 @login_required
 def delete_address(request,id):
     if request.method=='POST':
@@ -145,6 +149,7 @@ def delete_address(request,id):
         pi.delete()
         return HttpResponseRedirect('/shippingaddress')
 
+@method_decorator(user_only,name='dispatch')
 @method_decorator(login_required,name='dispatch')
 class update_address(View):
     def get(self, request, id):
@@ -158,14 +163,14 @@ class update_address(View):
         if fm.is_valid():
             fm.save()
         return HttpResponseRedirect('/shippingaddress')
-
+@user_only
 @login_required
 def checkout(request):
     totalitem = 0
     user = request.user
     add = Customer.objects.filter(user=user)
     cart_items = Cart.objects.filter(user=user)
-    amount = 0.0
+    amount = 0
     if request.user.is_authenticated:
         totalitem = len(Cart.objects.filter(user=request.user))
 
@@ -177,7 +182,7 @@ def checkout(request):
         totalamount = amount
     return render(request, 'app/checkout.html', {'add': add, 'totalamount': totalamount, 'cart_items': cart_items, 'totalitem': totalitem})
 
-
+@user_only
 @login_required
 def orders(request):
     totalitem = 0
@@ -186,7 +191,7 @@ def orders(request):
     op = OrderPlaced.objects.filter(user=request.user)
     return render(request, 'app/orders.html', {'order_placed': op, 'totalitem': totalitem})
 
-
+@user_only
 @login_required
 def payment_done(request):
     user = request.user
@@ -199,7 +204,7 @@ def payment_done(request):
         c.delete()
     return redirect("orders")
 
-
+@user_only
 @login_required
 def add_to_cart(request):
     user = request.user
@@ -209,11 +214,9 @@ def add_to_cart(request):
     return redirect('/cart')
 
 
-@login_required
-def buy_now(request):
-    return render(request, 'app/buynow.html')
 
 
+@user_only
 @login_required
 def show_cart(request):
     totalitem = 0
@@ -234,7 +237,7 @@ def show_cart(request):
         else:
             return render(request, 'app/emptycart.html')
 
-
+@user_only
 @login_required
 def plus_cart(request):
     if request.method == 'GET':
@@ -242,8 +245,7 @@ def plus_cart(request):
         c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
         c.quantity += 1
         c.save()
-        amount = 0.0
-        shipping_amount = 70.0
+        amount = 0
         cart_product = [p for p in Cart.objects.all() if p.user ==
                         request.user]
         for p in cart_product:
@@ -253,13 +255,12 @@ def plus_cart(request):
         data = {
 
             'quantity': c.quantity,
-            'amount': amount,
-            'totalamount': amount + shipping_amount
+            'totalamount': amount 
         }
 
         return JsonResponse(data)
 
-
+@user_only
 @login_required
 def minus_cart(request):
     if request.method == 'GET':
@@ -268,8 +269,7 @@ def minus_cart(request):
         if c.quantity > 1:
             c.quantity -= 1
         c.save()
-        amount = 0.0
-        shipping_amount = 70.0
+        amount = 0
         cart_product = [p for p in Cart.objects.all() if p.user ==
                         request.user]
         for p in cart_product:
@@ -278,28 +278,25 @@ def minus_cart(request):
         data = {
 
             'quantity': c.quantity,
-            'amount': amount,
-            'totalamount': amount + shipping_amount
+            'totalamount': amount
         }
         return JsonResponse(data)
 
-
+@user_only
 @login_required
 def remove_cart(request):
     if request.method == 'GET':
         prod_id = request.GET['prod_id']
         c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
         c.delete()
-        amount = 0.0
-        shipping_amount = 70.0
+        amount = 0
         cart_product = [p for p in Cart.objects.all() if p.user ==
                         request.user]
         for p in cart_product:
             tempamount = (p.quantity * p.product.discounted_price)
             amount += tempamount
         data = {
-            'amount': amount,
-            'totalamount': amount + shipping_amount
+            'totalamount': amount
         }
         return JsonResponse(data)
 

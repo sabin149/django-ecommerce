@@ -1,6 +1,6 @@
 from app.forms import CustomerRegistrationForm
 from django.http.response import HttpResponseRedirect
-from app.models import Product,Category_choices, OrderPlaced, ProductImage,STATUS_CHOICES
+from app.models import Product,Category_choices, OrderPlaced, Profile,STATUS_CHOICES
 from admins.forms import CategoryForm, ProductForm
 from app.auth import admin_only
 from .models import *
@@ -132,7 +132,8 @@ def register_user_admin(request):
     if request.method == 'POST':
         form = CustomerRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user=form.save()
+            Profile.objects.create(user=user,username=user.username)
             # messages.add_message(request, messages.SUCCESS, 'User Registered Successfully')
             return redirect('/admin-dashboard/show-user')
 
@@ -157,12 +158,9 @@ class AdminProductCreateView(CreateView):
     template_name = "admins/adminproductcreate.html"
     form_class = ProductForm
     success_url = reverse_lazy("adminproductlist")
-
+ 
     def form_valid(self, form):
-        p = form.save()
-        more_images = self.request.FILES.getlist("more_images")
-        for i in more_images:
-            ProductImage.objects.create(product=p, image=i)
+        form.save()
         return super().form_valid(form)
 
 @method_decorator(admin_only , name='dispatch')
@@ -213,7 +211,7 @@ class AdminOrderStatuChangeView(View):
         order_obj.save()
         return redirect(reverse_lazy("adminorderdetail", kwargs={"pk": order_id}))
 
-
+@method_decorator(admin_only , name='dispatch') 
 class AdminHomeView(TemplateView):
     template_name = "admins/adminpendingorder.html"
 

@@ -1,13 +1,11 @@
 from django.contrib import admin
-from .models import (Customer,Category_choices,Product,Cart,OrderPlaced, ProductImage,Profile)
+from .models import (Customer,Category_choices,Product,Cart,OrderPlaced,Profile)
 from django.utils.html import format_html
 from django.urls import reverse
 
 
 
-@ admin.register(ProductImage)
-class CustomerModelAdmin(admin.ModelAdmin):
-    list_display=['id','product','more_images']
+
 
 @ admin.register(Profile)
 class CustomerModelAdmin(admin.ModelAdmin):

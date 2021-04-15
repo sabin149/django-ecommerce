@@ -6,17 +6,7 @@
 {% endblock %}
 
 {% block main-content %}
-<style>
-.help-block{
-color:red;
-font-weight:bold;
-}
-.errorlist{
-color:red;
-font-weight:bold;
-}
 
-</style>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -42,7 +32,7 @@ font-weight:bold;
             <div class="col-md-12">
                 {% for message in messages %}
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                <h6 class="success_message py-3 px-1 my-2 text-center">{{message}}</h6>
+                <h6 class="success_message py-3 px-1 my-2 text-center bg-success text-white">{{message}}</h6>
                 {% endif %}
 
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
@@ -54,7 +44,7 @@ font-weight:bold;
                     <form class="form" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form | bootstrap_horizontal}}
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-dark mt-2">Submit</button>
                     </form>
                 </div>
             </div>

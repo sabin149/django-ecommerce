@@ -3,10 +3,9 @@ from django import forms
 
 
 class ProductForm(forms.ModelForm):
-    more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={"class": "form-control","multiple": True}))
     class Meta:
         model = Product
-        fields = ["title", "slug", "category", "product_image", "marked_price",
+        fields = ["title", "slug", "category", "product_image","marked_price",
                   "selling_price", "description", "brand"]
         widgets = {
             "title": forms.TextInput(attrs={
@@ -20,10 +19,10 @@ class ProductForm(forms.ModelForm):
             "category": forms.Select(attrs={
                 "class": "form-control"
             }),
+            
             "product_image": forms.ClearableFileInput(attrs={
                 "class": "form-control"
             }),
-
             "marked_price": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Marked price of the product..."

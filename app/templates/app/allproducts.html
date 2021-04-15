@@ -1,87 +1,47 @@
- {% extends 'app/base.html' %}
+{% extends 'app/base.html' %}
 
 {% block title %} All Products {% endblock %}
 {% block banner %} {% include 'app/banner.html' %} {% endblock banner %}
 
-
 {% block main-content %}
-<style>
-.mprice{
-    color:#bdbdbd;
-    font-weight:500;
-    text-decoration:line-through;
-}
-
-.sprice{
-    color:#103755;
-    font-size:1.125rem;
-    font-weight:700;
-}
-
-.ptitle{
-    color:#707b8e;
-    font-size:0.875rem;
-}
-
-.ptitle:hover{
-color:#103755; 
-transform:scale(1);
-background:white;
-}
 
 
+<div class="container-fluid">
+    <div class="all-products">
+        <div class="container ">
+            <br>
+            {% for cat in allcategories %}
+            <p class='category-title'>{{cat.title}}</p>
+            <div class="row">
+                {% for p in cat.product_set.all %}
+                <div class="col-md-3 card mb-2 p-2 product-details">
+                    <div class="m-2">
+                        <a href="{% url 'productdetail' p.slug %}" class="btn">
 
-.card{
-    height:280px;
-    width:250px;
-    transition: transform .2s;
-}
+                            <img src="{{p.product_image.url}}" alt="" class="product-img card-img-top">
 
-.card:hover{
-transform: translateY(-5px);
-}
-.product-img img{
-width: 100%;
-  height: auto;
-}
+                            <div class="details">
+                                <span class="ptitle">{{p.title}}</span><br>
+                                <p> <span class=" mprice"> Rs. {{p.marked_price}}</span> <span class="sprice">Rs.
+                                        {{p.selling_price}}</span> </p>
 
+                            </div>
 
-</style>
- <div class="container">
-<br>
-    {% for cat in allcategories %}
-    <h4 class="text-center">{{cat.title}}</h4><hr>
-    <div class="row">
-        {% for p in cat.product_set.all %}
-        <div class="col-md-3 ">
-            <div class="m-4 ">
-              <a href="{% url 'productdetail' p.slug %}" class="btn">
-                <div class='card'>
-               <div class="product-img">
-               
-                <img src="{{p.product_image.url}}" alt="" class="mb-3">
-               </div>
-                <div class="product-details mb-2">
-                
-                <span class="ptitle">{{p.title}}</span><br>
-                <span class=" mprice">Rs. {{p.marked_price}}</span>
-                <span class="sprice">Rs.  {{p.selling_price}}</span>
+                        </a>
+                    </div>
                 </div>
-                </div>
-                
-                </a>
+                {% endfor %}
             </div>
+            {% endfor %}
+
+
         </div>
-        {% endfor %}
     </div>
-    {% endfor %}
-</div>  
+</div>
 
 
 
 
 
 
-{% endblock main-content %} 
-
-
+{% endblock main-content %}

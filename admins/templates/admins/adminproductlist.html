@@ -24,7 +24,6 @@
               <th>Brand</th>
               <th>Category</th>
               <th>Product Image</th>
-              <th>More Product Image</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -46,14 +45,7 @@
                   alt=""
                 />
               </td>
-
-              <td>
-                <img
-                  src="{{p.images.url}}"
-                  style="height: 60px"
-                  alt=""
-                />
-              </td>
+ 
               <td>
                 <a
                   href="{% url 'updateproduct' p.id %}"

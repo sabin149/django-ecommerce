@@ -1,22 +1,27 @@
-{% extends 'app/base.html' %} 
-{% load static %} 
-{% block title %}Profile 
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Profile
 {% endblock title %} {% block main-content %}
 
-  <div class="row">
+<div class="row">
+
   <div class="col-sm-4 mx-4">
-    <h4 class="text-center alert alert-info">Add Shipping Address</h4>
+    <h4 class="text-center alert alert-dark">Add Shipping Address</h4>
     <form action="" method="POST" novalidate>
       {% csrf_token %} {{form.as_p}}
-      <input type="submit" class="btn btn-success" value="Add">
+      <input type="submit" class="btn btn-dark mb-2" value="Add">
     </form>
   </div>
 
-  <div class="col-sm-6 offset-1">
-    <h4 class="text-center alert alert-info">Shipping Address <a href="{% url 'checkout' %}" class="btn btn-primary">Check Out</a></h4>
-  
+
+
+  <div class="col-sm-7">
+    <h4 class="text-center alert alert-dark">Shipping Address <a href="{% url 'checkout' %}" class="btn btn-dark">Check
+        Out</a></h4>
+
+
     {% if stu %}
-    <table class="table table-hover table-dark">
+    <table class="table table-responsive">
       <thead>
         <tr>
           <th scope="col">Name</th>
@@ -31,7 +36,7 @@
         {% for fm in stu %}
 
         <tr>
-          
+
           <td>{{fm.name}}</td>
           <td>{{fm.address}}</td>
           <td>{{fm.city}}</td>
@@ -40,16 +45,11 @@
 
 
           <td>
-            <a
-              href="{% url 'updateaddress' fm.id %}"
-              class="btn btn-warning btn-sm"
-              >Edit</a
-            >
-            <form action="{% url 'deleteaddress' fm.id %}"
-              method="POST"
-              class="d-inline">
+            <a href="{% url 'updateaddress' fm.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <form action="{% url 'deleteaddress' fm.id %}" method="POST" class="d-inline">
               {% csrf_token %}
-              <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this address?')">
+              <input type="submit" value="Delete" class="btn btn-danger"
+                onclick="return confirm('Are you sure want to delete this address?')">
             </form>
           </td>
         </tr>
