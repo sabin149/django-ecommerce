@@ -1,3 +1,10 @@
+
+<style>
+.dropdown{
+margin-left:-200px;
+}
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
   <a class="navbar-brand" href="{% url 'dashboard' %}">Admin Dashboard</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,28 +14,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'dashboard' %}">Home<span class="sr-only">Home(current)</span></a>
+                <a class="nav-link active" href="{% url 'dashboard' %}">Home<span class="sr-only">Home(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'adminorderlist' %}">All Order</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'adminpendingorder' %}">All Pending Order</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" target="_black" href="{% url 'all-products' %}">Visit Site</a>
+                <a class="nav-link " target="_black" href="{% url 'all-products' %}">Visit Site</a>
             </li>
         </ul>
 
 <ul class="navbar-nav">
-<li class="nav-item">
-                <a class="btn btn-danger btn-sm mx-2  mr-auto" href="{% url 'passwordchange' %}">Change Password</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-danger btn-sm mx-2  mr-auto" href="/logout">Logout</a>
-            </li>
+            <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <i class="fas fa-user"></i> {{request.user}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+         
+         
+        </div>
+      </li>
         </ul>
     
   </div>

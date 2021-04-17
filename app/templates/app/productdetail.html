@@ -4,11 +4,11 @@ Detail{% endblock title %} {% block main-content %}
 
 
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-sm-4 p-details card mb-5 p-4">
+  <div class="row mt-5 pro-detail">
+    <div class="col-sm-5 p-details card mb-5 p-4">
       <img src="{{product.product_image.url}}" alt="" class="p-image">
     </div>
-    <div class="col-sm-7 offset-1 productdetails">
+    <div class="col-sm-6 offset-1 productdetails mt-5">
       <p class="p-title">{{product.title}}</p>  
       <p>Brand: {{product.brand}}</p>
  
@@ -17,18 +17,18 @@ Detail{% endblock title %} {% block main-content %}
       <p>{{product.description}}</p>
 
       {% if request.user.is_authenticated %} {% if item_already_in_cart %}
-      <a href="{% url 'showcart' %}" class="btn btn-dark px-5 py-2 ">Go To Cart</a>
+      <a href="{% url 'showcart' %}" class="btn btn-primary px-5 py-2 pro-btn">Go To Cart</a>
       {% else %}
       <form action="/add-to-cart">
         <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id" />
-        <button type="submit" class="btn btn-dark py-2 px-5">
+        <button type="submit" class="btn btn-primary py-2 px-5 pro-btn">
           Add To Cart
         </button>
       </form>
       {% endif %} {% endif %} {% if not request.user.is_authenticated %}
       <form action="/add-to-cart d-inline">
         <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id" />
-        <button type="submit" class="btn btn-dark py-2 px-5">
+        <button type="submit" class="btn btn-primary py-2 px-5 pro-btn">
           Add To Cart
         </button>
       </form>

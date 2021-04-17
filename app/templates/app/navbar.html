@@ -1,24 +1,27 @@
 {% load static %}
 
-<style>
- 
-</style>
+
+
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="/"> Logo</a>
+    <a class="navbar-brand " href="/"> <img src=" {% static 'app/images/logoy.png' %} " alt="" class="main-logo bg-dark"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+     
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">      
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'all-products' %}">Home</a>
+          <a class="nav-link active home" aria-current="page" href="{% url 'all-products' %}">Home</a>
         </li>
+  
       </ul>
       <form class="d-flex" action="{% url 'search' %}" method="get">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword" required>
-        <button class="btn btn-dark" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <input class="form-control me-2 search-input" type="text" placeholder="Search" aria-label="Search" name="keyword" required>
+        <button class="btn btn-dark btn-se " type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -54,10 +57,10 @@
 
           {% else %}
           <li class="nav-item mx-2">
-            <a href="{% url 'login' %}" class="nav-link text-white">Login</a>
+            <a href="{% url 'login' %}" class="nav-link">Login</a>
           </li>
           <li class="nav-item mx-2">
-            <a href="{% url 'customerregistration' %}" class="nav-link text-white">Registration</a>
+            <a href="{% url 'customerregistration' %}" class="nav-link ">Registration</a>
           </li>
           {% endif %}
 

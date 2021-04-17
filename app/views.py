@@ -293,7 +293,7 @@ def remove_cart(request):
         cart_product = [p for p in Cart.objects.all() if p.user ==
                         request.user]
         for p in cart_product:
-            tempamount = (p.quantity * p.product.discounted_price)
+            tempamount = (p.quantity * p.product.selling_price)
             amount += tempamount
         data = {
             'totalamount': amount

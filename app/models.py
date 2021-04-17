@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 
+
 class Profile(models.Model):
     user=models.OneToOneField(User, null =True, on_delete=models.CASCADE)
     firstname=models.CharField(max_length=200,null=True)
@@ -11,11 +12,11 @@ class Profile(models.Model):
     address=models.CharField(max_length=100,null=True)
     email=models.EmailField()
     username=models.CharField(max_length=200,null=True)
-    profile_pic=models.FileField(upload_to='static/uploads',default='static/app/images/cart.png')
+    profile_pic=models.FileField(upload_to='static/uploads',default='static/uploads/rog.png')
     created_date=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)+" "+self.phone+" "+self.address+" "+self.email+" "+str(self.profile_pic)
+        return str(self.id)+" "+str(self.phone)+" "+self.address+" "+self.email+" "+str(self.profile_pic)
 
 PROVINCE_CHOICES = (
     ('Province No. 1', 'Province No. 1'),

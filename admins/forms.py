@@ -25,6 +25,7 @@ class ProductForm(forms.ModelForm):
             }),
             "marked_price": forms.NumberInput(attrs={
                 "class": "form-control",
+                "required":False,
                 "placeholder": "Marked price of the product..."
             }),
             "selling_price": forms.NumberInput(attrs={

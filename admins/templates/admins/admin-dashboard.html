@@ -65,6 +65,31 @@
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card text-white bg-dark mb-3" style="max-width: 35rem">
+        <div class="card-header text-center">Total Pending Order</div>
+        <div class="card-body">
+          <a href="/admin-dashboard/admin-pendingorder/"
+            ><h1 class="card-title text-center">{{order_pending_count}}</h1></a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card text-white bg-primary mb-3" style="max-width: 35rem">
+        <div class="card-header text-center">Total Orders</div>
+        <div class="card-body">
+          <a href="/admin-dashboard/admin-all-orders/"
+            ><h1 class="card-title text-center">{{order_count}}</h1></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 {% endblock %}
