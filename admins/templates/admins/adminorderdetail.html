@@ -1,5 +1,5 @@
 {% extends 'layout-admin.html' %}
-
+{% load static %}
 {% block title %}
 <title>Order detail</title>
 {% endblock %}
@@ -13,11 +13,8 @@
             <p><span class="font-weight-bold">Order ID: </span> #ORDER_{{ord_obj.id}}</p>
             <p><span class="font-weight-bold">Order Status: </span> {{ord_obj.status}}</p>
             <p><span class="font-weight-bold">Order On: </span> {{ord_obj.ordered_date}}({{ord_obj.ordered_date|timesince}} ago)</p>
-            <p> <span class="font-weight-bold">Customer Image: </span></p>
-            <p> <span class="font-weight-bold"> <img src="{{ord_obj.profile.profile_pic.url}}" alt="" class="rounded-circle"></span></p>
             <p><span class="font-weight-bold">Customer Name: </span> {{ord_obj.customer.name}}</p>
-            <p><span class="font-weight-bold">Phone Number: </span> {{ord_obj.profile.phone}}</p>
-            <p><span class="font-weight-bold">Customer Email: </span> {{ord_obj.profile.email}}</p>
+            <p><span class="font-weight-bold">Customer Email: </span> {{ord_obj.customer.email}}</p>
             <p><span class="font-weight-bold">Zip Code: </span> {{ord_obj.customer.zipcode}}</p>
             <p><span class="font-weight-bold">Shipping Address: </span>{{ord_obj.customer.address}},{{ord_obj.customer.city}}</p>
             <h4 class="text-center">Ordered Items</h4>

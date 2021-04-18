@@ -1,9 +1,6 @@
 {% extends 'app/base.html' %} {% load static %} {% block title %}Customer
 Registration{% endblock title %} {% block main-content %}
 
-
-<style>
-</style>
 <div class="container">
   <div class="row my-3">
     <div class="col-sm-6 offset-sm-3">
@@ -17,9 +14,10 @@ Registration{% endblock title %} {% block main-content %}
        {% endif %}
 
       {% csrf_token %}
+      
         {% for fm in form %}
         <div class="form-group mb-3">
-          {{fm.label_tag}} {{fm}}
+          {{fm.label_tag}} {{fm}} 
           <small class="text-danger"> {{fm.errors|striptags}} </small>
         </div>
         {% endfor %}
@@ -36,4 +34,15 @@ Registration{% endblock title %} {% block main-content %}
     </div>
   </div>
 </div>
+
+<script>
+function myFunction() {
+  var x = document.getElements("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 {% endblock main-content %}

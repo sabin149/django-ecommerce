@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app', 'bootstrapform', 'admins'
+    'app', 'bootstrapform', 'admins',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'GamingAccessoriesHouse.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'new',
+        'NAME': 'gaming_accessories_house',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -130,6 +130,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-LOGIN_URL='/'
-# LOGIN_REDIRECT_URL = '/'
+LOGIN_URL='/login/'
+LOGIN_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

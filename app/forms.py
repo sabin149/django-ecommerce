@@ -1,4 +1,4 @@
-from .models import  Customer
+from .models import Customer
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UsernameField, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils.translation import gettext_lazy as _
@@ -26,16 +26,17 @@ class CustomerRegistrationForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     username = UsernameField(widget=forms.TextInput(
-        attrs={'autofocus': True, 'class': 'form-control','placeholder':'Enter Your Username'}))
+        attrs={'autofocus': True, 'onfocus': "this.value=''", 'class': 'form-control', 'placeholder': 'Enter Your Username'}))
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(
-        attrs={'autocomplete': 'current-password', 'class': 'form-control','placeholder':'Enter Your Password'}))
+        attrs={'autocomplete': 'current-password', 'onfocus': "this.value=''", 'class': 'form-control', 'placeholder': 'Enter Your Password'}))
 
 
 class CustomerAddressForm(ModelForm):
     class Meta:
         model = Customer
-        fields = ['name', 'address', 'city', 'province', 'zipcode']
-        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput(
+        fields = ['name', 'email', 'address', 'city', 'province', 'zipcode']
+        widgets = {'name': forms.TextInput(attrs={'class': 'form-control'}),"email":forms.EmailInput(
+            attrs={'class': 'form-control'}), 'address': forms.TextInput(attrs={'class': 'form-control'}), 'city': forms.TextInput(
             attrs={'class': 'form-control'}), 'province': forms.Select(attrs={'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs={'class': 'form-control'})}
 
 
@@ -66,4 +67,3 @@ class ProfileForm(ModelForm):
         model = Profile
         fields = '__all__'
         exclude = ['user', 'username']
-

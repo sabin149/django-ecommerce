@@ -11,7 +11,7 @@ urlpatterns = [
     path('show-admin', views.get_admin, name='show-admin'),
     path('update-user-to-admin/<int:user_id>', views.update_user_to_admin),
     path('register-user', views.register_user_admin),
-    path("admin-product/list", views.AdminProductListView.as_view(),
+    path("admin-product/list", views.AdminProductListView,
          name="adminproductlist"),
     path("admin-all-orders/", views.AdminOrderListView,
          name="adminorderlist"),

@@ -1,7 +1,6 @@
 from app.models import Category_choices, Product
 from django import forms
 
-
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -59,4 +58,8 @@ class CategoryForm(forms.ModelForm):
                 "placeholder": "Enter the unique slug here..."
             }),
         }
+
+
+    
+        
 

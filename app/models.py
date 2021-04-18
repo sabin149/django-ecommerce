@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user=models.OneToOneField(User, null =True, on_delete=models.CASCADE)
-    firstname=models.CharField(max_length=200,null=True)
-    lastname=models.CharField(max_length=200,null=True)
-    phone=models.CharField(max_length=10,null=True)
-    address=models.CharField(max_length=100,null=True)
+    user=models.OneToOneField(User,  on_delete=models.CASCADE)
+    firstname=models.CharField(max_length=200)
+    lastname=models.CharField(max_length=200)
+    phone=models.CharField(max_length=10)
+    address=models.CharField(max_length=100)
     email=models.EmailField()
-    username=models.CharField(max_length=200,null=True)
+    username=models.CharField(max_length=200)
     profile_pic=models.FileField(upload_to='static/uploads',default='static/uploads/rog.png')
     created_date=models.DateTimeField(auto_now_add=True)
 
@@ -77,7 +77,8 @@ STATUS_CHOICES = (
 ) 
 
 class Customer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email=models.EmailField()
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
@@ -85,7 +86,7 @@ class Customer(models.Model):
     zipcode = models.IntegerField()
     
     def __str__(self):
-        return str(self.id)+" "+self.name+" "+self.address+" "+self.city+" "+self.province+" "+str(self.zipcode) 
+        return str(self.id)+" "+self.email+" "+self.name+" "+self.address+" "+self.city+" "+self.province+" "+str(self.zipcode) 
 
 
 class OrderPlaced(models.Model):

@@ -22,7 +22,7 @@ def admin_dashboard(request):
     product_count = Product.objects.all().filter().count()
     category_count = Category_choices.objects.all().filter().count()
     order_count = OrderPlaced.objects.all().filter().count()
-    order_pending_count=OrderPlaced.objects.filter(status="Accepted").count()
+    order_pending_count = OrderPlaced.objects.filter(status="Accepted").count()
     context = {
 
         'user_count': user_count,
@@ -97,13 +97,18 @@ def delete_user(request, id):
         return HttpResponseRedirect('/admin-dashboard/show-user')
 
 
-@method_decorator(admin_only, name='dispatch')
-class AdminProductListView(ListView):
+@admin_only
+@login_required
+def AdminProductListView(request):
     template_name = "admins/adminproductlist.html"
-    queryset = Product.objects.all().order_by("-id")
-    context_object_name = "allproducts"
+    allproducts = Product.objects.all().order_by("-id")
+    context = {
+        'allproducts': allproducts
+    }
+    return render(request, template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminProductCreateView(CreateView):
     template_name = "admins/adminproductcreate.html"
@@ -140,6 +145,7 @@ class update_product(View):
         return HttpResponseRedirect('/admin-dashboard/admin-product/list')
 
 
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminCategoryListView(ListView):
     template_name = "admins/admincategorylist.html"
@@ -147,6 +153,7 @@ class AdminCategoryListView(ListView):
     context_object_name = "allcategory"
 
 
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminCategoryCreateView(CreateView):
     template_name = "admins/admincategorycreate.html"
@@ -183,6 +190,19 @@ class update_category(View):
         return HttpResponseRedirect('/admin-dashboard/admin-category/list')
 
 
+@admin_only
+@login_required
+def AdminOrderListView(request):
+    template_name = "admins/adminorderlist.html"
+    allorders = OrderPlaced.objects.all().order_by("-id")
+    context = {
+        'allorders': allorders,
+       
+    }
+    return render(request, template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminOrderDetailView(DetailView):
     template_name = "admins/adminorderdetail.html"
@@ -196,14 +216,6 @@ class AdminOrderDetailView(DetailView):
 
 
 @admin_only
-def AdminOrderListView(request):
-    template_name = "admins/adminorderlist.html"
-    allorders = OrderPlaced.objects.all().order_by("-id")
-    context = {'allorders': allorders}
-    return render(request, template_name, context)
-
-
-@admin_only
 @login_required
 def delete_order(request, id):
     if request.method == 'POST':
@@ -212,6 +224,7 @@ def delete_order(request, id):
         return HttpResponseRedirect('/admin-dashboard/admin-all-orders')
 
 
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminOrderStatuChangeView(View):
     def post(self, request, *args, **kwargs):
@@ -224,6 +237,7 @@ class AdminOrderStatuChangeView(View):
         return redirect(reverse_lazy("adminorderdetail", kwargs={"pk": order_id}))
 
 
+@method_decorator(login_required, name='dispatch')
 @method_decorator(admin_only, name='dispatch')
 class AdminHomeView(TemplateView):
     template_name = "admins/adminpendingorder.html"

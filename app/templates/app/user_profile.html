@@ -53,18 +53,5 @@
 
     </div>
 </div>
-<script>
-    var form_fields = document.getElementsByTagName('input')
-    form_fields[1].placeholder = 'Enter first name';
-    form_fields[2].placeholder = 'Enter last name';
-    form_fields[3].placeholder = 'Enter email address';
-    form_fields[4].placeholder = 'Enter phone number';
-    form_fields[4].placeholder = 'Enter address';
-
-    for (var field in form_fields){
-    field.className += ' form-control my-2'
-    }
-
-</script>
 
 {% endblock %}

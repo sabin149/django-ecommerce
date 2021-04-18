@@ -8,7 +8,6 @@ from .forms import CustomerRegistrationForm, CustomerAddressForm, LoginForm, Pro
 from django.contrib import messages
 from .models import Category_choices, OrderPlaced, Product, Customer, Cart, Profile
 from django.shortcuts import redirect, render
-from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import JsonResponse
  
@@ -18,7 +17,7 @@ class HomeView(TemplateView):
         totalitem = 0
         if self.request.user.is_authenticated:
             totalitem = len(Cart.objects.filter(user=request.user))
-        template_name = "app/allproducts.html"
+        template_name = "app/home.html"
         allcategories=Category_choices.objects.all()
         context={'allcategories':allcategories,'totalitem':totalitem}
         return render(request,template_name,context)
@@ -125,11 +124,12 @@ def shippingaddress(request):
         if fm.is_valid():
             usr = request.user
             name = fm.cleaned_data['name']
+            email = fm.cleaned_data['email']
             address = fm.cleaned_data['address']
             city = fm.cleaned_data['city']
             province = fm.cleaned_data['province']
             zipcode = fm.cleaned_data['zipcode']
-            reg = Customer(user=usr, name=name, address=address,
+            reg = Customer(user=usr, name=name,email=email, address=address,
                            city=city, province=province, zipcode=zipcode)
             reg.save()
             fm = CustomerAddressForm()
@@ -212,9 +212,6 @@ def add_to_cart(request):
     product = Product.objects.get(id=product_id)
     Cart(user=user, product=product).save()
     return redirect('/cart')
-
-
-
 
 @user_only
 @login_required
