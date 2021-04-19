@@ -40,10 +40,10 @@ class ProductForm(forms.ModelForm):
                 "class": "form-control",
                 "placeholder": "Enter the product brand here..."
             })
-
         }
 
 
+        
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category_choices

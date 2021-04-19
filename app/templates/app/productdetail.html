@@ -1,8 +1,6 @@
 {% extends 'app/base.html' %} {% load static %} {% block title %} Product
 Detail{% endblock title %} {% block main-content %}
 
-
-
 <div class="container">
   <div class="row mt-5 pro-detail">
     <div class="col-sm-5 p-details card mb-5 p-4">
@@ -15,6 +13,7 @@ Detail{% endblock title %} {% block main-content %}
       <p>  <span class="text-decoration-line-through mprice text-dark"> Rs. {{product.marked_price}}</span>  <span class="sprice">Rs. {{product.selling_price}}</span> </p>
       <h5 class="font-weight-bold">Product Description</h5>
       <p>{{product.description}}</p>
+
 
       {% if request.user.is_authenticated %} {% if item_already_in_cart %}
       <a href="{% url 'showcart' %}" class="btn btn-primary px-5 py-2 pro-btn">Go To Cart</a>

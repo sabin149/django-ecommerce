@@ -1,43 +1,38 @@
-{% extends 'app/base.html' %}
-
-{% block title %} All Products {% endblock %}
-{% block banner %} {% include 'app/banner.html' %} {% endblock banner %}
-
-{% block main-content %}
-
+{% extends 'app/base.html' %} {% block title %} All Products {% endblock %} {% block banner %} 
+{% include 'app/banner.html' %} {% endblock banner %} {% block main-content %}
 
 <div class="container-fluid">
-    <div class="all-products">
-        <div class="container ">
-            <br>
-            {% for cat in allcategories %}
-            <p class='category-title'>{{cat.title}}</p>
-            <div class="row">
-                {% for p in cat.product_set.all %}
-                <div class="col-md-3 card mb-2 p-2 product-details">
-                    <div class="m-2">
-                        <a href="{% url 'productdetail' p.slug %}" class="btn">
+  <div class="all-products">
+    <div class="container">
+      <br />
+      {% for cat in allcategories %}
+      <p class="category-title">{{cat.title}}</p>
+      <div class="row">
+        {% for p in cat.product_set.all %}
+        <div class="col-md-3 card mb-2 p-2 product-details">
+          <div class="m-2">
+            <a href="{% url 'productdetail' p.slug %}" class="btn">
+              <img
+                src="{{p.product_image.url}}"
+                alt=""
+                class="product-img card-img-top"
+              />
 
-                            <img src="{{p.product_image.url}}" alt="" class="product-img card-img-top">
-
-                            <div class="details">
-                                <span class="ptitle">{{p.title}}</span><br>
-                                <p> <span class=" mprice"> Rs. {{p.marked_price}}</span> <span class="sprice">Rs.
-                                        {{p.selling_price}}</span> </p>
-
-                            </div>
-
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% endfor %}
-
-
+              <div class="details">
+                <span class="ptitle">{{p.title}}</span><br />
+                <p>
+                  <span class="mprice"> Rs. {{p.marked_price}}</span>
+                  <span class="sprice">Rs. {{p.selling_price}}</span>
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
-
 
 {% endblock main-content %}

@@ -197,7 +197,6 @@ def AdminOrderListView(request):
     allorders = OrderPlaced.objects.all().order_by("-id")
     context = {
         'allorders': allorders,
-       
     }
     return render(request, template_name, context)
 

@@ -12,8 +12,15 @@
       type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
     />
+<link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
 </head>
 <body>
+<style>
+body{
+  background-color:skyblue;
+
+}
+</style>
 {% include 'navbar-admin.html' %}
 <div class="main">
     {% block content %}

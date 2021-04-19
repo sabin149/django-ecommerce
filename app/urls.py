@@ -7,7 +7,6 @@ from .forms import UserPasswordChangeForm, UserPasswordResetForm, UserSetPasswor
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-
     path('', views.HomeView.as_view(), name='all-products'),
     path('product/<slug:slug>/', ProductDetailView.as_view(), name='productdetail'),
     path('add-to-cart/', views.add_to_cart, name='add-to-cart'),

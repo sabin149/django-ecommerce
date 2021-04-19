@@ -140,7 +140,6 @@ def shippingaddress(request):
     context={'form': fm, 'stu': stud,'totalitem':totalitem}
     return render(request, 'app/shippingaddress.html',context)
 
-
 @user_only
 @login_required
 def delete_address(request,id):

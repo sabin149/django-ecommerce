@@ -2,35 +2,36 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container">
-    <a class="navbar-brand " href="/"> <img src=" {% static 'app/images/logoy.png' %} " alt="" class="main-logo bg-dark"></a>
+    <a class="navbar-brand " href="/"> <img src=" {% static 'app/images/logoy.png' %} " alt=""
+        class="main-logo bg-dark"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-     
+
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">      
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active home" aria-current="page" href="{% url 'all-products' %}">Home</a>
         </li>
-  
+
       </ul>
       <form class="d-flex" action="{% url 'search' %}" method="get">
-        <input class="form-control me-2 search-input" type="text" placeholder="Search" aria-label="Search" name="keyword" required>
+        <input class="form-control me-2 search-input" type="text" placeholder="Search" aria-label="Search"
+          name="keyword" required>
         <button class="btn btn-dark btn-se " type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
       <div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           {% if request.user.is_authenticated %}
 
- {% if not request.user.is_staff %}
+          {% if not request.user.is_staff %}
           <li class="nav-item dropdown mx-2">
             <a class="nav-link dropdown-toggle text-white " href="#" id="profileDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
               {{request.user.username|capfirst}}
             </a>
 
-           
             <ul class="dropdown-menu" aria-labelledby="profileDropdown">
               <li><a class="dropdown-item" href="{% url 'userprofile' %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url 'orders' %}">Orders</a></li>
@@ -39,16 +40,12 @@
             </ul>
           </li>
 
-
-
-        
-
           <li class="nav-item mx-2">
             <a href="{% url 'showcart' %}" class="nav-link text-white"> <i class="fas fa-shopping-cart cart-icon">
                 <sup><span class="badge bg-danger ">{{totalitem}}</span></sup></i> </a>
           </li>
 
-            {% endif %}
+          {% endif %}
 
 
           {% else %}

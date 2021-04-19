@@ -1,34 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
-
 body {
 	font-family: 'Poppins', sans-serif;
 	font-size: 14px;
-
 }
-
-
 /* navbar section */
-
-
-.home{
-	margin-left:6px;
+.home {
+	margin-left: 6px;
 }
-
-.main-logo{
-	height:2.5rem;
-  }
- 
+.main-logo {
+	height: 2.5rem;
+}
 .cart-icon {
 	font-size: 19px;
 }
-
-
 .search-input[type=text] {
 	width: 150px;
 	border: 2px solid #ccc;
@@ -36,57 +25,54 @@ body {
 	font-size: 14px;
 	transition: width 0.4s ease-in-out;
 	margin-left: 5px;
-  }
-  
-  .search-input[type=text]:focus {
+}
+.search-input[type=text]:focus {
 	width: 312px;
-  }
-  .btn-se{
-	border:none;
-	outline:none;
+}
+.btn-se {
+	border: none;
+	outline: none;
 	background-color: rgb(37, 36, 36);
 	border-radius: 5px;
-  }
-
-
+}
+/* admin-dashboard */
+.c-body a {
+	text-decoration: none;
+	color: #fff;
+}
+.c-body a:hover {
+	color: orange;
+}
+.nav-dropdwn {
+	margin-left: -200px;
+}
 /*  bannner section */
 .carousel-item img {
-	height: 615px !important;	
+	height: 615px !important;
 }
-
-
 /*products-detail section */
-
 .pro-detail .p-title {
 	color: #2d3748;
 	font-size: 0.875;
 	font-weight: 700;
 }
-
 .pro-detail .p-image {
 	width: 80%;
 	height: auto;
 }
-
-
 /* all products section */
-
 .category-title {
 	font-size: 1.5rem;
 	font-weight: 700;
 	color: #707b8e;
-
 	text-align: center;
 	margin: 0 auto 20px;
 	position: relative;
 	line-height: 60px;
 }
-
 .category-title:hover {
 	color: black;
 }
-
-
 .category-title::after {
 	content: ' ';
 	background: black;
@@ -98,79 +84,63 @@ body {
 	left: 50%;
 	transform: translateX(-50%);
 }
-
-
-
 .all-products {
 
 	width: 100%;
 	margin: auto;
 }
-
 .mprice {
 	color: #bdbdbd;
 	font-weight: 500;
 	text-decoration: line-through;
 }
-
 .sprice {
 	color: #103755;
 	font-size: 1.125rem;
 	font-weight: 700;
 }
-
 .details .ptitle {
 	color: #707b8e;
 	font-size: 0.875rem;
 }
-
 .details .ptitle:hover {
 	color: #103755;
 	transform: scale(1);
 }
-
 .product-details {
 
 	transition: transform .2s;
 }
-
 .all-products .product-img {
 	width: 80%;
 
 }
-
 .product-details:hover {
 	transform: translateY(-5px);
 
 }
-
 /* footer section */
 
 .container {
 	max-width: 1170px;
 	margin: auto;
 }
-
 .row {
 	display: flex;
 	flex-wrap: wrap;
 }
-
 ul {
 	list-style: none;
 }
-
 .footer {
 	background-color: #24262b;
 	padding: 70px 0;
 	line-height: 1.5;
 }
-
 .footer-col {
 	width: 25%;
 	padding: 0 15px;
 }
-
 .footer-col h4 {
 	font-size: 18px;
 	color: #ffffff;
@@ -179,12 +149,9 @@ ul {
 	font-weight: 500;
 	position: relative;
 }
-
-
 .footer-col ul li:not(:last-child) {
 	margin-bottom: 10px;
 }
-
 .footer-col ul li a {
 	font-size: 16px;
 	text-transform: capitalize;
@@ -195,12 +162,10 @@ ul {
 	display: block;
 	transition: all 0.3s ease;
 }
-
 .footer-col ul li a:hover {
 	color: #ffffff;
 	padding-left: 8px;
 }
-
 .footer-col .social-links a {
 	display: inline-block;
 	height: 40px;
@@ -213,14 +178,10 @@ ul {
 	color: #ffffff;
 	transition: all 0.5s ease;
 }
-
 .footer-col .social-links a:hover {
 	color: #24262b;
 	background-color: #ffffff;
 }
-
-
-
 /*responsive*/
 @media(max-width: 767px) {
 	.footer-col {
@@ -228,45 +189,36 @@ ul {
 		margin-bottom: 30px;
 	}
 }
-
 @media(max-width: 574px) {
 	.footer-col {
 		width: 100%;
 	}
 }
-
-
 @media only screen and (max-width: 600px) {
-	.pro-detail .card{
-	 width:200px;
-	 margin-left:10px;
-   }
-  .pro-btn{
-	margin-bottom:10px;
-  }
-  .all-products .row .card{
-	width:50%;
-	
+	.pro-detail .card {
+		width: 200px;
+		margin-left: 10px;
+	}
+	.pro-btn {
+		margin-bottom: 10px;
+	}
+	.all-products .row .card {
+		width: 50%;
+
+	}
+	.all-products .row .card img {
+		width: 70%;
+	}
+	.cp-btn {
+		font-size: 12px;
+		height: 50px;
+	}
+	.cpd-btn {
+		font-size: 12px;
+		height: 60px;
+
+	}
+	.gif {
+		width: 400px;
+	}
 }
-.all-products .row .card img{
-	width:70%;
-}
-
-.cp-btn{
-	font-size: 12px;
-	height:50px;
-}
-  
-.cpd-btn{
-	font-size: 12px;
-	height:60px;
-
-}
-.gif{
-	width:400px;
-}
-
-
-  }
-
-

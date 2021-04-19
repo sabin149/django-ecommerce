@@ -1,7 +1,5 @@
-{% extends 'app/base.html' %} {% load static %} {% block title %}Buy Now
+{% extends 'app/base.html' %} {% load static %} {% block title %}Buy Now 
 {% endblock title %} {% block main-content %}
-
-<style></style>
 
 <div class="container-lg">
   <div class="row mt-5">
@@ -9,7 +7,6 @@
       <div class="card">
         <h4 class="mt-2 text-center">Order Summary</h4>
         <hr />
-
         <table class="table table-responsive">
           <thead>
             <tr>
@@ -35,15 +32,15 @@
                 Total Amount: Rs. {{totalamount}}/-
               </th>
             </tr>
-
           </tbody>
         </table>
       </div>
     </div>
-
     <div class="col-sm-4">
       <h4>
-        <a href=" {% url 'shippingaddress' %} " class="btn btn-dark">Add Address</a>
+        <a href=" {% url 'shippingaddress' %} " class="btn btn-dark"
+          >Add Address</a
+        >
       </h4>
       {% if add %}
       <h4>Select Shipping Address</h4>
@@ -54,20 +51,30 @@
         <div class="card">
           <div class="card-body">
             <h5>{{ad.name}}</h5>
-            <p>{{ad.email}},{{ad.address}}, {{ad.city}}, {{ad.province}} - {{ad.zipcode}}</p>
+            <p>
+              {{ad.email}},{{ad.address}}, {{ad.city}}, {{ad.province}} -
+              {{ad.zipcode}}
+            </p>
           </div>
         </div>
         <div class="form-check mt-2 mb-5">
-          <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}"
-            value="{{ad.id}}">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="custid"
+            id="custadd{{forloop.counter}}"
+            value="{{ad.id}}"
+          />
 
-          <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+          <label
+            class="form-check-label fw-bold"
+            for="custadd{{forloop.counter}}"
+          >
             Address: {{forloop.counter}}
           </label>
         </div>
         {% endfor %}
         <div class="text-end">
-        
           <div id="paypal-button-container"></div>
         </div>
       </form>
@@ -78,19 +85,19 @@
   </div>
 </div>
 {% endblock main-content %} {% block payment-gateway %}
-<script
-  src="https://www.paypal.com/sdk/js?client-id=AelKoVrPsxbFGj6ea16Xotd79f1qLR7UhkvYRYCbIeq1OyoilgMUzAe1Rb9DDl2fK4trKvSwW0I21yBJ&currency=USD">
-</script>
+<script src="https://www.paypal.com/sdk/js?client-id=AelKoVrPsxbFGj6ea16Xotd79f1qLR7UhkvYRYCbIeq1OyoilgMUzAe1Rb9DDl2fK4trKvSwW0I21yBJ&currency=USD"></script>
 <script>
   paypal
     .Buttons({
       createOrder: function (data, actions) {
         return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: "{{totalamount}}",
+          purchase_units: [
+            {
+              amount: {
+                value: "{{totalamount}}",
+              },
             },
-          }, ],
+          ],
         });
       },
       onApprove: function (data, actions) {
@@ -104,4 +111,4 @@
     })
     .render("#paypal-button-container");
 </script>
-{% endblock payment-gateway %}y
+{% endblock payment-gateway %}
